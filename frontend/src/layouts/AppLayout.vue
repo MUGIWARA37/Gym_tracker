@@ -1,13 +1,18 @@
 <script setup>
 import { useUIStore } from '../stores/ui'
+import CloudBackground from '../components/CloudBackground.vue'
 
 const ui = useUIStore()
 </script>
 
 <template>
   <div
-    class="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100"
+    :class="[
+      'min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100',
+      ui.oled ? 'oled' : ''
+    ]"
   >
+    <CloudBackground v-if="ui.oled" />
     <div class="flex min-h-screen">
       <div
         v-if="ui.sidebarOpen"
@@ -91,12 +96,22 @@ const ui = useUIStore()
               Welcome back
             </div>
           </div>
-          <button
-            class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700 btn-cta"
-            @click="ui.toggleDark()"
-          >
-            Toggle theme
-          </button>
+          <div class="flex items-center gap-2">
+            <button
+              class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700 btn-cta"
+              @click="ui.toggleDark()"
+            >
+              Toggle theme
+            </button>
+            <button
+              class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700 btn-cta"
+              :class="ui.oled ? 'ring-2 ring-white/20' : ''"
+              @click="ui.toggleOled()"
+              title="Toggle OLED theme"
+            >
+              OLED
+            </button>
+          </div>
         </header>
 
         <main class="flex-1 px-4 py-6 sm:px-6 sm:py-8">
