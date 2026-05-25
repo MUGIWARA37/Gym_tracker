@@ -23,38 +23,38 @@ const submit = async () => {
 
 <template>
   <div>
-    <h1 class="text-2xl font-semibold text-slate-900">Welcome back</h1>
-    <p class="mt-2 text-sm text-slate-500">Sign in to continue</p>
+    <h1 class="text-2xl font-semibold text-slate-900 dark:text-white">Welcome back</h1>
+    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Sign in to continue</p>
 
     <form class="mt-6 space-y-4" @submit.prevent="submit">
       <div>
-        <label class="text-sm text-slate-600">Username</label>
+        <label class="text-sm text-slate-600 dark:text-slate-300">Username</label>
         <input
           v-model="username"
           type="text"
-          class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2"
+          class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 bg-white text-slate-900 dark:bg-transparent dark:border-slate-700 dark:text-white"
           required
         />
       </div>
       <div>
-        <label class="text-sm text-slate-600">Password</label>
+        <label class="text-sm text-slate-600 dark:text-slate-300">Password</label>
         <input
           v-model="password"
           type="password"
-          class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2"
+          class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 bg-white text-slate-900 dark:bg-transparent dark:border-slate-700 dark:text-white"
           required
         />
       </div>
       <p v-if="error" class="text-sm text-red-500">{{ error }}</p>
       <button
         type="submit"
-        class="w-full rounded-lg bg-slate-900 px-4 py-2 text-white"
+        class="w-full rounded-lg bg-slate-900 px-4 py-2 text-white dark:bg-white dark:text-black"
       >
         Sign in
       </button>
     </form>
 
-    <div class="mt-4 flex items-center justify-between text-sm text-slate-500">
+    <div class="mt-4 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
       <RouterLink to="/forgot-password">Forgot password?</RouterLink>
       <RouterLink to="/register">Create account</RouterLink>
     </div>

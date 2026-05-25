@@ -67,23 +67,23 @@ body {
 /* keep good contrast in dark mode */
 .dark .card-life { border-color: rgba(255,255,255,0.04); }
 
-/* OLED theme (black & white) */
-.oled {
+/* Dark / OLED theme (black & white) */
+.dark {
   background-color: #000 !important;
   color: #fff !important;
 }
-/* ensure main container uses pure black in OLED */
-.oled .min-h-screen { background-color: #000 !important; color: #fff !important; }
+/* ensure main container uses pure black in dark mode */
+.dark .min-h-screen { background-color: #000 !important; color: #fff !important; }
 
-/* adapt cards for OLED: transparent with subtle borders */
-.oled .card-life {
+/* adapt cards for dark: transparent with subtle borders */
+.dark .card-life {
   background: transparent;
   border: 1px solid rgba(255,255,255,0.04) !important;
   box-shadow: none;
 }
-.oled .border-slate-200 { border-color: rgba(255,255,255,0.03) !important; }
-.oled .text-slate-900 { color: #fff !important; }
-.oled .text-slate-500 { color: rgba(255,255,255,0.85) !important; }
+.dark .border-slate-200 { border-color: rgba(255,255,255,0.03) !important; }
+.dark .text-slate-900 { color: #fff !important; }
+.dark .text-slate-500 { color: rgba(255,255,255,0.85) !important; }
 
 /* Cloud background that follows cursor — now a disk of dots */
 .cloud-bg {
@@ -101,7 +101,7 @@ body {
   border-radius: 50%;
   overflow: hidden;
 }
-.oled .cloud-bg { opacity: 0.14; filter: blur(10px) saturate(140%); }
+.dark .cloud-bg { opacity: 0.14; filter: blur(10px) saturate(140%); }
 .cloud-bg svg { width: 100%; height: 100%; display: block; }
 .cloud-bg circle { transform-origin: center; }
 

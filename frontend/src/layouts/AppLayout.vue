@@ -6,13 +6,8 @@ const ui = useUIStore()
 </script>
 
 <template>
-  <div
-    :class="[
-      'min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100',
-      ui.oled ? 'oled' : ''
-    ]"
-  >
-    <CloudBackground v-if="ui.oled" />
+  <div class="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <CloudBackground v-if="ui.darkMode" />
     <div class="flex min-h-screen">
       <div
         v-if="ui.sidebarOpen"
@@ -102,15 +97,6 @@ const ui = useUIStore()
               @click="ui.toggleDark()"
             >
               Toggle theme
-            </button>
-            <button
-              v-if="ui.darkMode"
-              class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700 btn-cta"
-              :class="ui.oled ? 'ring-2 ring-white/20' : ''"
-              @click="ui.toggleOled()"
-              title="Toggle OLED variant (black & white)"
-            >
-              OLED
             </button>
           </div>
         </header>
