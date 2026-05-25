@@ -20,6 +20,14 @@ ensure-env:
 	[ -f backend/.env ] || cp backend/.env.example backend/.env
 	[ -f frontend/.env ] || cp frontend/.env.example frontend/.env
 
+install: ensure-env
+	@echo "Installing backend dependencies..."
+	python3 -m venv backend/venv || true
+	. backend/venv/bin/activate && pip install --upgrade pip setuptools wheel
+	if [ -f backend/requirements.txt ]; then . backend/venv/bin/activate && pip install -r backend/requirements.txt; else echo "No backend/requirements.txt found, skipping"; fi
+	@echo "Installing frontend dependencies..."
+	if [ -f frontend/package.json ]; then cd frontend && npm ci; else echo "No frontend/package.json found, skipping"; fi
+
 clean:
 	rm -rf backend/.env frontend/.env
 	mkdir -p frontend/dist
