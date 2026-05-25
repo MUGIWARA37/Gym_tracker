@@ -16,7 +16,7 @@ const ui = useUIStore()
       ></div>
       <aside
         :class="[
-          'fixed inset-y-0 left-0 z-40 w-64 transform border-r border-slate-200 bg-white px-6 py-8 shadow-lg transition-transform duration-300 dark:border-slate-800 dark:bg-slate-900 lg:static lg:shadow-none lg:transition-none',
+          'fixed inset-y-0 left-0 z-40 w-64 transform border-r border-slate-200 bg-white card-life px-6 py-8 shadow-lg transition-transform duration-300 dark:border-slate-800 dark:bg-slate-900 lg:static lg:shadow-none lg:transition-none',
           ui.sidebarOpen ? 'translate-x-0' : '-translate-x-full',
           'lg:translate-x-0 lg:flex lg:flex-col',
         ]"
@@ -77,11 +77,11 @@ const ui = useUIStore()
 
       <div class="flex min-h-screen flex-1 flex-col">
         <header
-          class="flex items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-4 dark:border-slate-800 dark:bg-slate-900 sm:px-6"
+          class="flex items-center justify-between gap-3 border-b border-slate-200 bg-transparent header-gradient px-4 py-4 dark:border-slate-800 dark:bg-slate-900 sm:px-6"
         >
           <div class="flex items-center gap-3">
             <button
-              class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700 lg:hidden"
+              class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700 lg:hidden btn-cta"
               type="button"
               @click="ui.toggleSidebar()"
             >
@@ -92,7 +92,7 @@ const ui = useUIStore()
             </div>
           </div>
           <button
-            class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700"
+            class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700 btn-cta"
             @click="ui.toggleDark()"
           >
             Toggle theme
