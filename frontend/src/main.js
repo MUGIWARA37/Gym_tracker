@@ -12,6 +12,11 @@ app.use(router)
 
 // apply initial theme classes from stored preferences
 const ui = useUIStore()
+// ensure OLED implies dark mode
+if (ui.oled && !ui.darkMode) {
+  ui.darkMode = true
+  localStorage.setItem('darkMode', 'true')
+}
 document.documentElement.classList.toggle('dark', ui.darkMode)
 document.documentElement.classList.toggle('oled', ui.oled)
 

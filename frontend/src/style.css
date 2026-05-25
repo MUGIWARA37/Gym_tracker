@@ -85,20 +85,27 @@ body {
 .oled .text-slate-900 { color: #fff !important; }
 .oled .text-slate-500 { color: rgba(255,255,255,0.85) !important; }
 
-/* Cloud background that follows cursor */
+/* Cloud background that follows cursor — now a disk of dots */
 .cloud-bg {
   position: fixed;
   left: 0;
   top: 0;
-  width: 480px;
-  height: 240px;
+  width: 420px;
+  height: 420px;
   transform: translate3d(-50%, -50%, 0);
   pointer-events: none;
   z-index: 0;
   opacity: 0.10;
-  filter: blur(22px);
+  filter: blur(14px) saturate(120%);
   transition: opacity .3s ease, transform .08s linear;
+  border-radius: 50%;
+  overflow: hidden;
 }
-.oled .cloud-bg { opacity: 0.14; filter: blur(18px); }
-.cloud-bg svg { width: 100%; height: 100%; display: block; fill: #ffffff; opacity: 0.92; }
+.oled .cloud-bg { opacity: 0.14; filter: blur(10px) saturate(140%); }
+.cloud-bg svg { width: 100%; height: 100%; display: block; }
+.cloud-bg circle { transform-origin: center; }
+
+@media (max-width: 640px) {
+  .cloud-bg { display: none; }
+}
 

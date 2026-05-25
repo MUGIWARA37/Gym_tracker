@@ -104,10 +104,11 @@ const ui = useUIStore()
               Toggle theme
             </button>
             <button
+              v-if="ui.darkMode"
               class="rounded-md border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700 btn-cta"
               :class="ui.oled ? 'ring-2 ring-white/20' : ''"
               @click="ui.toggleOled()"
-              title="Toggle OLED theme"
+              title="Toggle OLED variant (black & white)"
             >
               OLED
             </button>
