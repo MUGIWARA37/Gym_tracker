@@ -2,6 +2,7 @@
 import { onMounted, ref, computed } from 'vue'
 import { ExercisesService } from '../../services/exercises.service'
 import { useDebounce } from '../../composables/useDebounce'
+import Icon from '../../components/ui/Icon.vue'
 
 const exercises = ref([])
 const loading = ref(true)
@@ -11,19 +12,19 @@ const selectedDifficulty = ref(null)
 const searchQuery = ref('')
 
 const muscleGroups = [
-  { key: 'chest', label: 'Chest', emoji: '💪' },
-  { key: 'back', label: 'Back', emoji: '🔙' },
-  { key: 'legs', label: 'Legs', emoji: '🦵' },
-  { key: 'shoulders', label: 'Shoulders', emoji: '🏋️' },
-  { key: 'arms', label: 'Arms', emoji: '💪' },
-  { key: 'core', label: 'Core', emoji: '⚡' },
-  { key: 'full_body', label: 'Full Body', emoji: '🔥' },
+  { key: 'chest', label: 'Chest' },
+  { key: 'back', label: 'Back' },
+  { key: 'legs', label: 'Legs' },
+  { key: 'shoulders', label: 'Shoulders' },
+  { key: 'arms', label: 'Arms' },
+  { key: 'core', label: 'Core' },
+  { key: 'full_body', label: 'Full Body' },
 ]
 
 const difficulties = ['beginner', 'intermediate', 'advanced']
 
 const difficultyColor = { beginner: 'badge-green', intermediate: 'badge-orange', advanced: 'badge-red' }
-const muscleEmoji = { chest: '💪', back: '🏋️', legs: '🦵', shoulders: '🔝', arms: '💪', core: '⚡', full_body: '🔥' }
+const muscleIcon = { chest: 'dumbbell', back: 'dumbbell', legs: 'dumbbell', shoulders: 'dumbbell', arms: 'dumbbell', core: 'bolt', full_body: 'fire' }
 
 const debouncedSearch = useDebounce(searchQuery, 400)
 
@@ -95,7 +96,7 @@ onMounted(async () => {
           :class="{ active: selectedMuscle === m.key }"
           @click="selectedMuscle = m.key"
         >
-          {{ m.emoji }} {{ m.label }}
+          {{ m.label }}
         </button>
       </div>
 
@@ -136,7 +137,7 @@ onMounted(async () => {
         <div class="exercise-thumb">
           <img v-if="exercise.image" :src="exercise.image" :alt="exercise.name" />
           <div v-else class="muscle-bg">
-            <span style="font-size:48px">{{ muscleEmoji[exercise.muscle_group] || '💪' }}</span>
+            <span style="display:inline-flex;align-items:center;color:rgba(255,255,255,0.75)"><Icon :name="muscleIcon[exercise.muscle_group] || 'dumbbell'" :size="44" /></span>
           </div>
           <!-- Difficulty badge overlay -->
           <span
@@ -163,7 +164,10 @@ onMounted(async () => {
 
           <!-- Calories & video -->
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--border)">
-            <span style="font-size:12px;color:var(--text-muted)">🔥 {{ exercise.calories_burn_estimate }} kcal / 30m</span>
+            <span style="font-size:12px;color:var(--text-muted);display:inline-flex;align-items:center;gap:6px">
+              <Icon name="fire" :size="14" />
+              {{ exercise.calories_burn_estimate }} kcal / 30m
+            </span>
             <a
               v-if="exercise.video_url"
               :href="exercise.video_url"
@@ -171,7 +175,7 @@ onMounted(async () => {
               rel="noopener"
               class="btn btn-ghost btn-sm"
               style="font-size:11px;padding:4px 10px"
-            >▶ Watch</a>
+            ><Icon name="play" :size="14" /> Watch</a>
           </div>
         </div>
       </div>

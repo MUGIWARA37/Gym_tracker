@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import api from '../../services/api'
+import Icon from '../../components/ui/Icon.vue'
 
 const email = ref('')
 const sent = ref(false)
@@ -24,8 +25,9 @@ const submit = async () => {
     <div class="auth-title">Reset Password</div>
     <div class="auth-sub">We'll send a reset link to your email</div>
 
-    <div v-if="sent" style="background:rgba(200,247,82,0.1);border:1px solid rgba(200,247,82,0.2);border-radius:10px;padding:16px;font-size:14px;color:var(--neon);margin-bottom:20px">
-      ✓ Reset link sent! Check your inbox.
+    <div v-if="sent" style="background:rgba(200,247,82,0.1);border:1px solid rgba(200,247,82,0.2);border-radius:10px;padding:16px;font-size:14px;color:var(--neon);margin-bottom:20px;display:flex;align-items:center;gap:10px">
+      <Icon name="check-circle" :size="18" />
+      Reset link sent! Check your inbox.
     </div>
 
     <form v-else @submit.prevent="submit" style="display:flex;flex-direction:column;gap:16px">
@@ -40,7 +42,10 @@ const submit = async () => {
     </form>
 
     <div style="margin-top:20px;text-align:center;font-size:13px">
-      <RouterLink to="/login" style="color:var(--neon);text-decoration:none;font-weight:600">← Back to sign in</RouterLink>
+      <RouterLink to="/login" style="color:var(--neon);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px">
+        <Icon name="arrow-left" :size="14" />
+        Back to sign in
+      </RouterLink>
     </div>
   </div>
 </template>

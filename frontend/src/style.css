@@ -340,10 +340,10 @@ h1, h2, h3, h4 {
   z-index: 1;
 }
 
-.stat-icon.neon { background: var(--neon-dim); }
-.stat-icon.blue { background: var(--blue-dim); }
-.stat-icon.orange { background: var(--orange-dim); }
-.stat-icon.purple { background: var(--purple-dim); }
+.stat-icon.neon { background: var(--neon-dim); color: var(--neon); }
+.stat-icon.blue { background: var(--blue-dim); color: var(--blue); }
+.stat-icon.orange { background: var(--orange-dim); color: var(--orange); }
+.stat-icon.purple { background: var(--purple-dim); color: var(--purple); }
 
 .stat-value {
   font-family: var(--font-display);
@@ -845,4 +845,28 @@ h1, h2, h3, h4 {
     transform: none;
     transition: none;
   }
+}
+
+/* ─── Modal ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 90;
+}
+
+.modal {
+  width: min(920px, 100%);
+  max-height: 86vh;
+  overflow: auto;
+  background: rgba(16, 16, 24, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
 }

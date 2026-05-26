@@ -1,12 +1,13 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { NotificationsService } from '../../services/notifications.service'
+import Icon from '../../components/ui/Icon.vue'
 
 const notifications = ref([])
 const loading = ref(true)
 const filter = ref('all')
 
-const typeIcon = { workout: '🏋️', progress: '📊', nutrition: '🥗', system: '⚙️', achievement: '🏆' }
+const typeIcon = { workout: 'dumbbell', progress: 'chart-bar-square', nutrition: 'beaker', system: 'cog-6-tooth', achievement: 'trophy' }
 const typeColor = { workout: 'badge-orange', progress: 'badge-neon', nutrition: 'badge-blue', system: 'badge-muted', achievement: 'badge-purple' }
 
 const formatTime = (dt) => {
@@ -61,7 +62,8 @@ const markAllRead = async () => {
           </p>
         </div>
         <button v-if="unreadCount > 0" class="btn btn-secondary" @click="markAllRead">
-          ✓ Mark all read
+          <Icon name="check" :size="16" />
+          Mark all read
         </button>
       </div>
     </div>
@@ -83,7 +85,7 @@ const markAllRead = async () => {
 
     <!-- Empty -->
     <div v-else-if="!filtered.length" style="text-align:center;padding:64px 24px;color:var(--text-muted)">
-      <div style="font-size:48px;margin-bottom:16px">🔔</div>
+      <div style="display:flex;justify-content:center;margin-bottom:16px;color:var(--text-secondary)"><Icon name="bell" :size="44" /></div>
       <div style="font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:6px">
         {{ filter === 'unread' ? 'No unread notifications' : 'No notifications yet' }}
       </div>
@@ -106,8 +108,8 @@ const markAllRead = async () => {
         <div v-else style="width:8px;flex-shrink:0"></div>
 
         <!-- Icon -->
-        <div style="width:40px;height:40px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">
-          {{ typeIcon[notif.notification_type] || '📣' }}
+        <div style="width:40px;height:40px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text-secondary)">
+          <Icon :name="typeIcon[notif.notification_type] || 'megaphone'" :size="18" />
         </div>
 
         <!-- Content -->

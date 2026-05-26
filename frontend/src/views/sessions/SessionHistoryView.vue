@@ -3,6 +3,7 @@ import { onMounted, ref, computed } from 'vue'
 import { SessionsService } from '../../services/sessions.service'
 import { WorkoutsService } from '../../services/workouts.service'
 import { useTimer } from '../../composables/useTimer'
+import Icon from '../../components/ui/Icon.vue'
 
 const sessions = ref([])
 const plans = ref([])
@@ -16,7 +17,7 @@ const { elapsed, formatted, start, pause, reset } = useTimer()
 
 const form = ref({ workout_plan: '', mood: 'motivated', notes: '' })
 const moods = ['motivated', 'excellent', 'average', 'tired']
-const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average: '😐' }
+const moodIcon = { motivated: 'fire', tired: 'clock', excellent: 'bolt', average: 'minus' }
 const moodColors = { motivated: 'badge-orange', excellent: 'badge-neon', average: 'badge-muted', tired: 'badge-blue' }
 
 const formatDate = (dt) => dt ? new Date(dt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'
@@ -96,7 +97,9 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
           <p class="page-subtitle">{{ sessions.length }} sessions logged</p>
         </div>
         <button v-if="!activeSession" class="btn btn-primary" @click="showForm = !showForm">
-          {{ showForm ? '✕ Cancel' : '▷ Start Session' }}
+          <Icon v-if="showForm" name="x-mark" :size="16" />
+          <Icon v-else name="play" :size="16" />
+          {{ showForm ? 'Cancel' : 'Start Session' }}
         </button>
       </div>
     </div>
@@ -104,7 +107,8 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
     <!-- Active Session Timer -->
     <div v-if="activeSession" class="timer-card" style="margin-bottom:24px" v-scroll-animate>
       <div style="font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px">
-        🔴 Live Session
+        <span style="display:inline-block;width:8px;height:8px;border-radius:999px;background:#ef4444;box-shadow:0 0 12px rgba(239,68,68,0.55);margin-right:8px"></span>
+        Live Session
       </div>
       <div class="timer-display">{{ formatted }}</div>
       <div style="margin-top:8px;font-size:14px;color:var(--text-secondary)">
@@ -112,9 +116,10 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
       </div>
       <div style="display:flex;justify-content:center;gap:12px;margin-top:20px">
         <button class="btn btn-secondary btn-lg" @click="pauseTimer">
-          {{ timerState === 'active' ? '⏸ Pause' : '▷ Resume' }}
+          <Icon :name="timerState === 'active' ? 'pause' : 'play'" :size="18" />
+          {{ timerState === 'active' ? 'Pause' : 'Resume' }}
         </button>
-        <button class="btn btn-danger btn-lg" @click="stopSession">⏹ Finish</button>
+        <button class="btn btn-danger btn-lg" @click="stopSession"><Icon name="stop" :size="18" /> Finish</button>
       </div>
     </div>
 
@@ -137,7 +142,7 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
               class="btn btn-sm"
               :class="form.mood === m ? 'btn-primary' : 'btn-secondary'"
               @click="form.mood = m"
-            >{{ moodEmoji[m] }} {{ formatLabel(m) }}</button>
+            ><Icon :name="moodIcon[m]" :size="16" /> {{ formatLabel(m) }}</button>
           </div>
         </div>
         <div class="form-group">
@@ -145,7 +150,8 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
           <textarea v-model="form.notes" class="form-input" rows="2" placeholder="Optional notes…" style="resize:vertical"></textarea>
         </div>
         <button class="btn btn-primary btn-lg" :disabled="submitting" @click="startSession">
-          {{ submitting ? 'Starting…' : '▷ Start Session' }}
+          <Icon name="play" :size="18" />
+          {{ submitting ? 'Starting…' : 'Start Session' }}
         </button>
       </div>
     </div>
@@ -153,17 +159,17 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
     <!-- Stats bar -->
     <div class="grid-stats" style="margin-bottom:24px">
       <div class="stat-card accent-blue" v-scroll-animate>
-        <div class="stat-icon blue">📋</div>
+        <div class="stat-icon blue"><Icon name="clipboard-document-list" :size="18" /></div>
         <div class="stat-value blue">{{ sessions.length }}</div>
         <div class="stat-label">Total Sessions</div>
       </div>
       <div class="stat-card accent-orange" v-scroll-animate="{ delay: 60 }">
-        <div class="stat-icon orange">🔥</div>
+        <div class="stat-icon orange"><Icon name="fire" :size="18" /></div>
         <div class="stat-value orange">{{ Math.round(totalCalories).toLocaleString() }}</div>
         <div class="stat-label">Total Calories</div>
       </div>
       <div class="stat-card accent-neon" v-scroll-animate="{ delay: 120 }">
-        <div class="stat-icon neon">✅</div>
+        <div class="stat-icon neon"><Icon name="check" :size="18" /></div>
         <div class="stat-value neon">{{ sessions.filter(s => s.completed).length }}</div>
         <div class="stat-label">Completed</div>
       </div>
@@ -187,7 +193,7 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
           :key="session.id"
           style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border)"
         >
-          <span style="font-size:22px">{{ moodEmoji[session.mood] || '💪' }}</span>
+          <span style="display:inline-flex;align-items:center;color:var(--text-secondary)"><Icon :name="moodIcon[session.mood] || 'dumbbell'" :size="18" /></span>
           <div style="flex:1;min-width:0">
             <div style="font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
               {{ session.workout_plan_name || 'Free Workout' }}
@@ -197,8 +203,11 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
           <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end">
             <span class="badge" :class="moodColors[session.mood]">{{ formatLabel(session.mood) }}</span>
             <span class="badge badge-muted">{{ formatDuration(session.start_time, session.end_time) }}</span>
-            <span v-if="session.calories_burned" class="badge badge-orange">🔥 {{ Math.round(session.calories_burned) }}</span>
-            <span v-if="session.completed" class="badge badge-green">✓</span>
+            <span v-if="session.calories_burned" class="badge badge-orange" style="display:inline-flex;align-items:center;gap:6px">
+              <Icon name="fire" :size="14" />
+              {{ Math.round(session.calories_burned) }}
+            </span>
+            <span v-if="session.completed" class="badge badge-green" style="display:inline-flex;align-items:center;gap:6px"><Icon name="check" :size="14" /></span>
           </div>
         </div>
       </div>

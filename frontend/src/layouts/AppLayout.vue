@@ -3,20 +3,20 @@ import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useUIStore } from '../stores/ui'
 import { useAuthStore } from '../stores/auth'
+import Icon from '../components/ui/Icon.vue'
 
 const ui = useUIStore()
 const auth = useAuthStore()
 const route = useRoute()
 
 const navLinks = [
-  { to: '/dashboard', label: 'Dashboard', icon: '▦' },
-  { to: '/exercises', label: 'Exercises', icon: '⊕' },
-  { to: '/workouts', label: 'Workout Plans', icon: '≡' },
-  { to: '/sessions', label: 'Sessions', icon: '▷' },
-  { to: '/progress', label: 'Progress', icon: '↗' },
-  { to: '/nutrition', label: 'Nutrition', icon: '◎' },
-  { to: '/notifications', label: 'Notifications', icon: '◯' },
-  { to: '/profile', label: 'Profile', icon: '☺' },
+  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
+  { to: '/exercises', label: 'Exercises', icon: 'plus-circle' },
+  { to: '/workouts', label: 'Workout Plans', icon: 'rectangle-stack' },
+  { to: '/sessions', label: 'Sessions', icon: 'play-circle' },
+  { to: '/nutrition', label: 'Nutrition', icon: 'beaker' },
+  { to: '/notifications', label: 'Notifications', icon: 'bell' },
+  { to: '/profile', label: 'Profile', icon: 'user-circle' },
 ]
 
 const greeting = computed(() => {
@@ -55,7 +55,7 @@ const username = computed(() => auth.user?.username || auth.user?.first_name || 
             class="nav-link"
             @click="ui.closeSidebar()"
           >
-            <span style="font-size:15px;width:18px;text-align:center;flex-shrink:0">{{ link.icon }}</span>
+            <Icon :name="link.icon" class="nav-icon" :size="18" />
             {{ link.label }}
           </RouterLink>
         </nav>
@@ -67,7 +67,7 @@ const username = computed(() => auth.user?.username || auth.user?.first_name || 
           style="border:none;cursor:pointer;width:100%;background:transparent"
           @click="auth.logout()"
         >
-          <span style="font-size:15px;width:18px;text-align:center">⏻</span>
+          <Icon name="arrow-left-on-rectangle" class="nav-icon" :size="18" />
           Sign out
         </button>
       </div>
@@ -89,16 +89,10 @@ const username = computed(() => auth.user?.username || auth.user?.first_name || 
         </div>
         <div class="topbar-right">
           <RouterLink to="/notifications" class="btn btn-ghost btn-sm" style="position:relative">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-            </svg>
+            <Icon name="bell" :size="16" />
           </RouterLink>
           <RouterLink to="/profile" class="btn btn-secondary btn-sm" style="gap:6px">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
+            <Icon name="user-circle" :size="16" />
             Profile
           </RouterLink>
         </div>

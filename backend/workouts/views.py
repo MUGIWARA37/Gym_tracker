@@ -4,11 +4,35 @@ from rest_framework.response import Response
 
 from api.permissions import IsOwner, IsOwnerOrCoach
 from workouts.models import WorkoutPlan, WorkoutPlanExercise
-from workouts.serializers import WorkoutPlanExerciseSerializer, WorkoutPlanSerializer
+from workouts.serializers import (
+    WorkoutPlanExerciseSerializer,
+    WorkoutPlanSerializer,
+    WorkoutPlanWriteSerializer,
+)
 
 
 class WorkoutPlanViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutPlanSerializer
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return WorkoutPlanWriteSerializer
+        return WorkoutPlanSerializer
+
+    def create(self, request, *args, **kwargs):
+        # Validate & write with the write-serializer (supports auto_generate),
+        # but respond with the read-serializer so the UI gets exercises/structure.
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        plan = serializer.instance
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            WorkoutPlanSerializer(plan, context=self.get_serializer_context()).data,
+            status=status.HTTP_201_CREATED,
+            headers=headers,
+        )
     search_fields = ["title", "description"]
     filterset_fields = ["goal", "difficulty", "is_public"]
     ordering_fields = ["created_at", "title"]
@@ -44,13 +68,17 @@ class WorkoutPlanViewSet(viewsets.ModelViewSet):
             description=original.description,
             goal=original.goal,
             difficulty=original.difficulty,
+            days_per_week=original.days_per_week,
             estimated_duration=original.estimated_duration,
             created_by=request.user,
             is_public=False,
+            structure=original.structure,
+            nutrition_guidance=original.nutrition_guidance,
         )
         for link in original.workoutplanexercise_set.all():
             WorkoutPlanExercise.objects.create(
                 plan=new_plan,
+                day=getattr(link, "day", 1),
                 exercise=link.exercise,
                 order=link.order,
                 sets=link.sets,

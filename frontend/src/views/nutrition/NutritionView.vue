@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { NutritionService } from '../../services/nutrition.service'
+import Icon from '../../components/ui/Icon.vue'
 
 const goal = ref(null)
 const loading = ref(true)
@@ -70,7 +71,14 @@ const donutSegments = computed(() => {
           <p class="page-subtitle">Manage your daily macro targets</p>
         </div>
         <button class="btn btn-primary" @click="editing = !editing">
-          {{ editing ? '✕ Cancel' : (goal ? '✎ Edit Goals' : '+ Set Goals') }}
+          <template v-if="editing">
+            <Icon name="x-mark" :size="16" />
+            Cancel
+          </template>
+          <template v-else>
+            <Icon :name="goal ? 'pencil-square' : 'plus'" :size="16" />
+            {{ goal ? 'Edit Goals' : 'Set Goals' }}
+          </template>
         </button>
       </div>
     </div>
@@ -87,23 +95,23 @@ const donutSegments = computed(() => {
       <h3 style="font-size:15px;font-weight:700;margin-bottom:18px">{{ goal ? 'Edit' : 'Set' }} Daily Goals</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
         <div class="form-group">
-          <label class="form-label">🔥 Calories (kcal)</label>
+          <label class="form-label" style="display:flex;align-items:center;gap:8px"><Icon name="fire" :size="14" /> Calories (kcal)</label>
           <input v-model.number="form.calories_target" type="number" class="form-input" min="1000" max="6000" />
         </div>
         <div class="form-group">
-          <label class="form-label">🥩 Protein (g)</label>
+          <label class="form-label" style="display:flex;align-items:center;gap:8px"><Icon name="dumbbell" :size="14" /> Protein (g)</label>
           <input v-model.number="form.protein_g" type="number" class="form-input" min="0" />
         </div>
         <div class="form-group">
-          <label class="form-label">🌾 Carbs (g)</label>
+          <label class="form-label" style="display:flex;align-items:center;gap:8px"><Icon name="bolt" :size="14" /> Carbs (g)</label>
           <input v-model.number="form.carbs_g" type="number" class="form-input" min="0" />
         </div>
         <div class="form-group">
-          <label class="form-label">🥑 Fats (g)</label>
+          <label class="form-label" style="display:flex;align-items:center;gap:8px"><Icon name="beaker" :size="14" /> Fats (g)</label>
           <input v-model.number="form.fats_g" type="number" class="form-input" min="0" />
         </div>
         <div class="form-group">
-          <label class="form-label">💧 Water (ml)</label>
+          <label class="form-label" style="display:flex;align-items:center;gap:8px"><Icon name="droplet" :size="14" /> Water (ml)</label>
           <input v-model.number="form.water_ml" type="number" class="form-input" min="0" />
         </div>
       </div>
@@ -114,10 +122,10 @@ const donutSegments = computed(() => {
 
     <!-- No goal yet -->
     <div v-else-if="!goal" style="text-align:center;padding:64px 24px;color:var(--text-muted)">
-      <div style="font-size:48px;margin-bottom:16px">🥗</div>
+      <div style="display:flex;justify-content:center;margin-bottom:16px;color:var(--text-secondary)"><Icon name="beaker" :size="46" /></div>
       <div style="font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:8px">No nutrition goals set</div>
       <p style="margin-bottom:20px">Set your daily calorie and macro targets to track your nutrition.</p>
-      <button class="btn btn-primary" @click="editing = true">Set Goals →</button>
+      <button class="btn btn-primary" @click="editing = true">Set Goals <Icon name="arrow-right" :size="14" /></button>
     </div>
 
     <!-- Display goals -->
@@ -155,8 +163,8 @@ const donutSegments = computed(() => {
         <!-- Macro cards -->
         <div style="display:flex;flex-direction:column;gap:12px" v-scroll-animate="{ delay: 120 }">
           <div v-for="(m, i) in macros" :key="m.label" class="card card-sm" style="display:flex;align-items:center;gap:14px" v-scroll-animate="{ delay: i * 60 }">
-            <div style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0" :style="{ background: m.color + '20' }">
-              {{ m.label === 'Protein' ? '🥩' : m.label === 'Carbs' ? '🌾' : '🥑' }}
+            <div style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0" :style="{ background: m.color + '20', color: m.color }">
+              <Icon :name="m.label === 'Protein' ? 'dumbbell' : m.label === 'Carbs' ? 'bolt' : 'beaker'" :size="18" />
             </div>
             <div style="flex:1">
               <div style="font-size:18px;font-weight:800;font-family:var(--font-display)" :style="{ color: m.color }">{{ m.val }}<span style="font-size:13px">g</span></div>
@@ -164,7 +172,7 @@ const donutSegments = computed(() => {
             </div>
           </div>
           <div class="card card-sm" style="display:flex;align-items:center;gap:14px">
-            <div style="width:40px;height:40px;border-radius:10px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💧</div>
+            <div style="width:40px;height:40px;border-radius:10px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue)"><Icon name="droplet" :size="18" /></div>
             <div>
               <div style="font-size:18px;font-weight:800;font-family:var(--font-display);color:var(--blue)">{{ (goal.water_ml / 1000).toFixed(1) }}<span style="font-size:13px">L</span></div>
               <div style="font-size:12px;color:var(--text-muted)">Daily water target</div>
@@ -175,7 +183,7 @@ const donutSegments = computed(() => {
 
       <!-- Tips -->
       <div class="card" v-scroll-animate="{ delay: 180 }">
-        <h3 style="font-size:15px;font-weight:700;margin-bottom:14px">💡 Nutrition Tips</h3>
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px"><Icon name="light-bulb" :size="16" /> Nutrition Tips</h3>
         <div style="display:grid;gap:10px">
           <div style="padding:12px;border-radius:8px;background:var(--surface-2);font-size:13px;color:var(--text-secondary);border-left:3px solid var(--blue)">
             <strong style="color:var(--text-primary)">Protein timing:</strong> Aim for 20–40g protein within 30 minutes post-workout to maximize muscle protein synthesis.

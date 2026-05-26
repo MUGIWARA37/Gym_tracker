@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import api from '../../services/api'
+import Icon from '../../components/ui/Icon.vue'
 
 const stats = ref(null)
 const loading = ref(true)
@@ -34,7 +35,7 @@ const formatDuration = (start, end) => {
   return `${Math.floor(mins/60)}h ${mins%60}m`
 }
 
-const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average: '😐' }
+const moodIcon = { motivated: 'fire', tired: 'clock', excellent: 'bolt', average: 'minus' }
 </script>
 
 <template>
@@ -60,22 +61,22 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
     <template v-else>
       <div class="grid-stats">
         <div class="stat-card accent-neon" v-scroll-animate>
-          <div class="stat-icon neon">🏋️</div>
+          <div class="stat-icon neon"><Icon name="calendar-days" :size="18" /></div>
           <div class="stat-value neon">{{ stats?.weekly_sessions ?? '—' }}</div>
           <div class="stat-label">Weekly Sessions</div>
         </div>
         <div class="stat-card accent-orange" v-scroll-animate="{ delay: 60 }">
-          <div class="stat-icon orange">🔥</div>
+          <div class="stat-icon orange"><Icon name="fire" :size="18" /></div>
           <div class="stat-value orange">{{ stats?.weekly_calories_burned ? Math.round(stats.weekly_calories_burned).toLocaleString() : '—' }}</div>
           <div class="stat-label">Calories Burned</div>
         </div>
         <div class="stat-card accent-blue" v-scroll-animate="{ delay: 120 }">
-          <div class="stat-icon blue">⚡</div>
+          <div class="stat-icon blue"><Icon name="bolt" :size="18" /></div>
           <div class="stat-value blue">{{ stats?.current_streak_days ?? '—' }}</div>
           <div class="stat-label">Day Streak</div>
         </div>
         <div class="stat-card accent-purple" v-scroll-animate="{ delay: 180 }">
-          <div class="stat-icon purple">◎</div>
+          <div class="stat-icon purple"><Icon name="check-badge" :size="18" /></div>
           <div class="stat-value purple">{{ stats?.goal_completion_percent ?? '—' }}<span style="font-size:18px">%</span></div>
           <div class="stat-label">Goal Completion</div>
         </div>
@@ -113,8 +114,9 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
               </div>
               <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">Sessions this week</div>
               <div class="divider"></div>
-              <div style="font-size:22px;font-weight:800;font-family:var(--font-display);color:var(--orange)">
-                {{ stats?.current_streak_days ?? 0 }} 🔥
+              <div style="font-size:22px;font-weight:800;font-family:var(--font-display);color:var(--orange);display:flex;align-items:center;gap:6px">
+                <span>{{ stats?.current_streak_days ?? 0 }}</span>
+                <Icon name="fire" :size="16" />
               </div>
               <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">Day streak</div>
             </div>
@@ -126,19 +128,15 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
           <h3 style="font-size:15px;font-weight:700;margin-bottom:16px">Quick Actions</h3>
           <div style="display:flex;flex-direction:column;gap:10px">
             <RouterLink to="/sessions" class="btn btn-primary btn-full" style="justify-content:space-between">
-              <span>▷ Start Workout</span>
+              <span style="display:inline-flex;align-items:center;gap:8px"><Icon name="play" :size="16" /> Start Workout</span>
               <span style="font-size:12px;opacity:0.7">Log a session</span>
             </RouterLink>
             <RouterLink to="/exercises" class="btn btn-secondary btn-full" style="justify-content:space-between">
-              <span>⊕ Browse Exercises</span>
+              <span style="display:inline-flex;align-items:center;gap:8px"><Icon name="dumbbell" :size="16" /> Browse Exercises</span>
               <span style="font-size:12px;opacity:0.7">{{ stats?.total_exercises ?? '' }} exercises</span>
             </RouterLink>
-            <RouterLink to="/progress" class="btn btn-secondary btn-full" style="justify-content:space-between">
-              <span>↗ Log Progress</span>
-              <span style="font-size:12px;opacity:0.7">Body metrics</span>
-            </RouterLink>
             <RouterLink to="/nutrition" class="btn btn-secondary btn-full" style="justify-content:space-between">
-              <span>◎ Nutrition Goals</span>
+              <span style="display:inline-flex;align-items:center;gap:8px"><Icon name="beaker" :size="16" /> Nutrition Goals</span>
               <span style="font-size:12px;opacity:0.7">Macros & calories</span>
             </RouterLink>
           </div>
@@ -149,11 +147,14 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
       <div class="card mt-8" v-scroll-animate="{ delay: 240 }">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
           <h3 style="font-size:15px;font-weight:700">Recent Sessions</h3>
-          <RouterLink to="/sessions" class="btn btn-ghost btn-sm">View all →</RouterLink>
+          <RouterLink to="/sessions" class="btn btn-ghost btn-sm">View all <Icon name="arrow-right" :size="14" /></RouterLink>
         </div>
 
         <div v-if="!recentSessions.length" style="text-align:center;padding:32px;color:var(--text-muted);font-size:14px">
-          No sessions yet. <RouterLink to="/sessions" style="color:var(--neon);text-decoration:none">Start your first workout →</RouterLink>
+          No sessions yet.
+          <RouterLink to="/sessions" style="color:var(--neon);text-decoration:none;display:inline-flex;align-items:center;gap:6px">
+            Start your first workout <Icon name="arrow-right" :size="14" />
+          </RouterLink>
         </div>
 
         <div v-else style="display:flex;flex-direction:column;gap:10px">
@@ -163,7 +164,7 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
             style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border)"
           >
             <div style="display:flex;align-items:center;gap:12px">
-              <span style="font-size:20px">{{ moodEmoji[session.mood] || '💪' }}</span>
+              <span style="display:inline-flex;align-items:center;color:var(--text-secondary)"><Icon :name="moodIcon[session.mood] || 'dumbbell'" :size="18" /></span>
               <div>
                 <div style="font-size:13px;font-weight:600;color:var(--text-primary)">{{ session.workout_plan_name || 'Free Session' }}</div>
                 <div style="font-size:12px;color:var(--text-muted);margin-top:2px">{{ formatDate(session.start_time) }}</div>

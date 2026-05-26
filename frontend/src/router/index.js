@@ -8,7 +8,6 @@ import ForgotPasswordView from '../views/auth/ForgotPasswordView.vue'
 import ExercisesView from '../views/exercises/ExerciseListView.vue'
 import WorkoutsView from '../views/workouts/PlanListView.vue'
 import SessionsView from '../views/sessions/SessionHistoryView.vue'
-import ProgressView from '../views/progress/ProgressView.vue'
 import NutritionView from '../views/nutrition/NutritionView.vue'
 import NotificationsView from '../views/notifications/NotificationsView.vue'
 import ProfileView from '../views/profile/ProfileView.vue'
@@ -53,11 +52,6 @@ const routes = [
   {
     path: '/sessions',
     component: SessionsView,
-    meta: { layout: 'app', requiresAuth: true },
-  },
-  {
-    path: '/progress',
-    component: ProgressView,
     meta: { layout: 'app', requiresAuth: true },
   },
   {

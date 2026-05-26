@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../stores/auth'
+import Icon from '../../components/ui/Icon.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -33,7 +34,7 @@ const submit = async () => {
     <form @submit.prevent="submit" style="display:flex;flex-direction:column;gap:16px">
       <div class="form-group">
         <label class="form-label">Username</label>
-        <input v-model="username" type="text" class="form-input" placeholder="your_username" required />
+        <input v-model="username" type="text" class="form-input" placeholder="username" required />
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
@@ -46,13 +47,15 @@ const submit = async () => {
 
       <button type="submit" class="btn btn-primary btn-lg btn-full" :disabled="loading" style="margin-top:4px">
         <span v-if="loading">Signing in…</span>
-        <span v-else>Sign in →</span>
+        <span v-else>Sign in <Icon name="arrow-right" :size="14" /></span>
       </button>
     </form>
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px;font-size:13px;color:var(--text-secondary)">
-      <RouterLink to="/forgot-password" style="color:var(--text-secondary);text-decoration:none;transition:color 0.15s" @mouseover="$event.target.style.color='var(--neon)'" @mouseleave="$event.target.style.color='var(--text-secondary)'">Forgot password?</RouterLink>
-      <RouterLink to="/register" style="color:var(--neon);text-decoration:none;font-weight:600">Create account →</RouterLink>
+      <RouterLink to="/forgot-password" style="color:var(--text-secondary);text-decoration:none;transition:color 0.15s" @mouseover="$event.target.style.color='var(--neon)'" @mouseleave="$event.target.style.color='var(--text-secondary)'">
+        Forgot password?
+      </RouterLink>
+      <RouterLink to="/register" style="color:var(--neon);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:6px">Create account <Icon name="arrow-right" :size="14" /></RouterLink>
     </div>
   </div>
 </template>

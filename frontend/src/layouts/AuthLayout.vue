@@ -1,3 +1,7 @@
+<script setup>
+import Icon from '../components/ui/Icon.vue'
+</script>
+
 <template>
   <div class="auth-wrap">
     <!-- Left decorative panel -->
@@ -14,10 +18,10 @@
         </p>
         <!-- Decorative pills -->
         <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:32px">
-          <span class="badge badge-neon">🔥 Calorie Tracking</span>
-          <span class="badge badge-blue">📊 Progress Charts</span>
-          <span class="badge badge-purple">💪 Workout Plans</span>
-          <span class="badge badge-orange">⏱ Live Timer</span>
+          <span class="badge badge-neon" style="display:inline-flex;align-items:center;gap:6px"><Icon name="fire" :size="14" /> Calorie Tracking</span>
+          <span class="badge badge-blue" style="display:inline-flex;align-items:center;gap:6px"><Icon name="dumbbell" :size="14" /> Exercise Library</span>
+          <span class="badge badge-purple" style="display:inline-flex;align-items:center;gap:6px"><Icon name="rectangle-stack" :size="14" /> Workout Plans</span>
+          <span class="badge badge-orange" style="display:inline-flex;align-items:center;gap:6px"><Icon name="clock" :size="14" /> Live Timer</span>
         </div>
       </div>
     </div>

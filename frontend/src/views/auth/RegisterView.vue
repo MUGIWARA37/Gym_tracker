@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '../../stores/auth'
+import Icon from '../../components/ui/Icon.vue'
 
 const auth = useAuthStore()
 const username = ref('')
@@ -58,13 +59,13 @@ const submit = async () => {
 
       <button type="submit" class="btn btn-primary btn-lg btn-full" :disabled="loading" style="margin-top:4px">
         <span v-if="loading">Creating account…</span>
-        <span v-else>Create account →</span>
+        <span v-else>Create account <Icon name="arrow-right" :size="14" /></span>
       </button>
     </form>
 
     <div style="margin-top:20px;font-size:13px;color:var(--text-secondary);text-align:center">
       Already have an account?
-      <RouterLink to="/login" style="color:var(--neon);text-decoration:none;font-weight:600;margin-left:4px">Sign in →</RouterLink>
+      <RouterLink to="/login" style="color:var(--neon);text-decoration:none;font-weight:600;margin-left:4px;display:inline-flex;align-items:center;gap:6px">Sign in <Icon name="arrow-right" :size="14" /></RouterLink>
     </div>
   </div>
 </template>
