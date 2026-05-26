@@ -27,11 +27,17 @@ EXERCISES: list[ExerciseTemplate] = [
     ExerciseTemplate("Incline Dumbbell Press", "chest", "Dumbbells", "beginner"),
     ExerciseTemplate("Push-Up", "chest", "Bodyweight", "beginner"),
     ExerciseTemplate("Cable Fly", "chest", "Cable machine", "intermediate"),
+    ExerciseTemplate("Machine Chest Press", "chest", "Machine", "beginner"),
+    ExerciseTemplate("Decline Bench Press", "chest", "Barbell", "intermediate"),
+    ExerciseTemplate("Dumbbell Fly", "chest", "Dumbbells", "beginner"),
     # Back
     ExerciseTemplate("Pull-Up", "back", "Bodyweight", "intermediate"),
     ExerciseTemplate("Lat Pulldown", "back", "Machine", "beginner"),
     ExerciseTemplate("Barbell Row", "back", "Barbell", "intermediate"),
     ExerciseTemplate("Seated Cable Row", "back", "Cable machine", "beginner"),
+    ExerciseTemplate("Single-Arm Dumbbell Row", "back", "Dumbbells", "beginner"),
+    ExerciseTemplate("Chest-Supported Row", "back", "Machine", "beginner"),
+    ExerciseTemplate("Straight-Arm Pulldown", "back", "Cable machine", "beginner"),
     # Legs
     ExerciseTemplate("Back Squat", "legs", "Barbell", "intermediate"),
     ExerciseTemplate("Romanian Deadlift", "legs", "Barbell", "intermediate"),
