@@ -67,23 +67,26 @@ body {
 /* keep good contrast in dark mode */
 .dark .card-life { border-color: rgba(255,255,255,0.04); }
 
-/* Dark / OLED theme (black & white) */
+/* Dark / OLED theme (pure black & white) */
 .dark {
-  background-color: #000 !important;
-  color: #fff !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
 }
 /* ensure main container uses pure black in dark mode */
-.dark .min-h-screen { background-color: #000 !important; color: #fff !important; }
+.dark .min-h-screen { background-color: #000000 !important; color: #ffffff !important; }
+.dark body { background-color: #000000 !important; }
 
-/* adapt cards for dark: transparent with subtle borders */
+/* adapt cards for dark: pure transparent with minimal borders */
 .dark .card-life {
-  background: transparent;
+  background: transparent !important;
   border: 1px solid rgba(255,255,255,0.04) !important;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 .dark .border-slate-200 { border-color: rgba(255,255,255,0.03) !important; }
-.dark .text-slate-900 { color: #fff !important; }
+.dark .bg-white { background-color: transparent !important; }
+.dark .text-slate-900 { color: #ffffff !important; }
 .dark .text-slate-500 { color: rgba(255,255,255,0.85) !important; }
+.dark .text-slate-600 { color: rgba(255,255,255,0.8) !important; }
 
 /* Cloud background that follows cursor — now a disk of dots */
 .cloud-bg {
