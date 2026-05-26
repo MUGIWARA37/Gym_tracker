@@ -16,7 +16,7 @@ const ui = useUIStore()
       ></div>
       <aside
         :class="[
-          'fixed inset-y-0 left-0 z-40 w-64 transform border-r bg-white text-slate-900 px-6 py-8 shadow-lg transition-transform duration-300 dark:border-slate-800 dark:bg-black dark:text-white lg:static lg:shadow-none lg:transition-none',
+          'fixed inset-y-0 left-0 z-40 w-64 transform border-r bg-white text-slate-900 px-6 py-8 shadow-lg transition-transform duration-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white lg:static lg:shadow-none lg:transition-none',
           ui.sidebarOpen ? 'translate-x-0' : '-translate-x-full',
           'lg:translate-x-0 lg:flex lg:flex-col',
         ]"

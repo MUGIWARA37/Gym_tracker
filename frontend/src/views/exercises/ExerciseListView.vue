@@ -1,10 +1,26 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { ExercisesService } from '../../services/exercises.service'
 
 const exercises = ref([])
 const loading = ref(true)
 const error = ref('')
+const selectedMuscle = ref(null)
+
+const muscleGroups = [
+  { key: 'chest', label: 'Chest' },
+  { key: 'back', label: 'Back' },
+  { key: 'legs', label: 'Legs' },
+  { key: 'shoulders', label: 'Shoulders' },
+  { key: 'arms', label: 'Arms' },
+  { key: 'core', label: 'Core' },
+  { key: 'full_body', label: 'Full Body' },
+]
+
+const filteredExercises = computed(() => {
+  if (!selectedMuscle.value) return exercises.value
+  return exercises.value.filter(ex => ex.muscle_group === selectedMuscle.value)
+})
 
 const formatLabel = (value) => {
   if (!value) return ''
@@ -30,7 +46,7 @@ onMounted(fetchExercises)
 <template>
   <div>
     <h1 class="text-2xl font-semibold">Exercises</h1>
-    <p class="mt-2 text-sm text-slate-500">Browse and manage exercises.</p>
+    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Browse and manage exercises.</p>
 
     <p v-if="loading" class="mt-6 text-sm text-slate-500">Loading exercises...</p>
     <p v-else-if="error" class="mt-6 text-sm text-red-500">{{ error }}</p>
@@ -38,57 +54,94 @@ onMounted(fetchExercises)
       No exercises yet.
     </p>
 
-    <div v-else class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      <div
-        v-for="exercise in exercises"
-        :key="exercise.id"
-        class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
-      >
-        <div class="h-36 bg-slate-100 dark:bg-slate-800">
-          <img
-            v-if="exercise.image"
-            :src="exercise.image"
-            :alt="exercise.name"
-            class="h-full w-full object-cover"
-          />
-        </div>
-        <div class="space-y-2 p-4">
-          <div class="flex items-center justify-between gap-2">
-            <h2 class="text-base font-semibold text-slate-900 dark:text-white">
-              {{ exercise.name }}
-            </h2>
-            <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-200">
-              {{ formatLabel(exercise.difficulty_level) }}
-            </span>
-          </div>
-          <p class="text-sm text-slate-500 dark:text-slate-300">
-            {{ exercise.description || 'No description provided.' }}
-          </p>
-          <div class="flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-300">
-            <span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800">
-              {{ formatLabel(exercise.muscle_group) }}
-            </span>
-            <span
-              v-if="exercise.equipment_needed"
-              class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
-            >
-              {{ exercise.equipment_needed }}
-            </span>
-            <span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800">
-              {{ exercise.calories_burn_estimate }} kcal / 30m
-            </span>
-          </div>
-          <a
-            v-if="exercise.video_url"
-            :href="exercise.video_url"
-            target="_blank"
-            rel="noopener"
-            class="text-xs font-medium text-slate-700 underline dark:text-slate-200"
+    <template v-else>
+      <!-- Muscle Group Filter -->
+      <div class="mt-6 space-y-3">
+        <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Filter by muscle group:</p>
+        <div class="flex flex-wrap gap-2">
+          <button
+            @click="selectedMuscle = null"
+            :class="[
+              'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+              selectedMuscle === null
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-black'
+                : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700'
+            ]"
           >
-            Watch demo
-          </a>
+            All
+          </button>
+          <button
+            v-for="muscle in muscleGroups"
+            :key="muscle.key"
+            @click="selectedMuscle = muscle.key"
+            :class="[
+              'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+              selectedMuscle === muscle.key
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-black'
+                : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700'
+            ]"
+          >
+            {{ muscle.label }}
+          </button>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Showing {{ filteredExercises.length }} of {{ exercises.length }} exercises
+        </p>
+      </div>
+
+      <!-- Exercise Grid -->
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div
+          v-for="exercise in filteredExercises"
+          :key="exercise.id"
+          class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        >
+          <div class="h-36 bg-slate-100 dark:bg-slate-800">
+            <img
+              v-if="exercise.image"
+              :src="exercise.image"
+              :alt="exercise.name"
+              class="h-full w-full object-cover"
+            />
+          </div>
+          <div class="space-y-2 p-4">
+            <div class="flex items-center justify-between gap-2">
+              <h2 class="text-base font-semibold text-slate-900 dark:text-white">
+                {{ exercise.name }}
+              </h2>
+              <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-200">
+                {{ formatLabel(exercise.difficulty_level) }}
+              </span>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-300">
+              {{ exercise.description || 'No description provided.' }}
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-300">
+              <span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800">
+                {{ formatLabel(exercise.muscle_group) }}
+              </span>
+              <span
+                v-if="exercise.equipment_needed"
+                class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
+              >
+                {{ exercise.equipment_needed }}
+              </span>
+              <span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800">
+                {{ exercise.calories_burn_estimate }} kcal / 30m
+              </span>
+            </div>
+            <a
+              v-if="exercise.video_url"
+              :href="exercise.video_url"
+              target="_blank"
+              rel="noopener"
+              class="text-xs font-medium text-slate-700 underline dark:text-slate-200"
+            >
+              Watch demo
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
