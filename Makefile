@@ -11,6 +11,7 @@ run: ensure-env build-frontend-dist
 	docker compose up -d db backend
 	docker compose exec -T backend python manage.py migrate
 	docker compose exec -T backend python manage.py seed_demo --username $(SEED_USERNAME) --email $(SEED_EMAIL) --password $(SEED_PASSWORD)
+	docker compose exec -T backend python manage.py seed_exercises
 	docker compose up -d
 
 build:
