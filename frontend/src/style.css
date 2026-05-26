@@ -87,6 +87,7 @@ body {
 .dark .text-slate-900 { color: #ffffff !important; }
 .dark .text-slate-500 { color: rgba(255,255,255,0.85) !important; }
 .dark .text-slate-600 { color: rgba(255,255,255,0.8) !important; }
+.dark .text-black { color: #ffffff !important; }
 
 /* Cloud background that follows cursor — now a disk of dots */
 .cloud-bg {
