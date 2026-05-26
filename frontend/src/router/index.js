@@ -11,6 +11,7 @@ import SessionsView from '../views/sessions/SessionHistoryView.vue'
 import ProgressView from '../views/progress/ProgressView.vue'
 import NutritionView from '../views/nutrition/NutritionView.vue'
 import NotificationsView from '../views/notifications/NotificationsView.vue'
+import ProfileView from '../views/profile/ProfileView.vue'
 import ForbiddenView from '../views/errors/ForbiddenView.vue'
 import NotFoundView from '../views/errors/NotFoundView.vue'
 
@@ -67,6 +68,11 @@ const routes = [
   {
     path: '/notifications',
     component: NotificationsView,
+    meta: { layout: 'app', requiresAuth: true },
+  },
+  {
+    path: '/profile',
+    component: ProfileView,
     meta: { layout: 'app', requiresAuth: true },
   },
   {

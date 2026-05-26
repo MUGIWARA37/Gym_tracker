@@ -102,7 +102,7 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
     </div>
 
     <!-- Active Session Timer -->
-    <div v-if="activeSession" class="timer-card animate-fade-up" style="margin-bottom:24px">
+    <div v-if="activeSession" class="timer-card" style="margin-bottom:24px" v-scroll-animate>
       <div style="font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px">
         🔴 Live Session
       </div>
@@ -119,7 +119,7 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
     </div>
 
     <!-- Start Session Form -->
-    <div v-if="showForm && !activeSession" class="card animate-fade-up" style="margin-bottom:24px">
+    <div v-if="showForm && !activeSession" class="card" style="margin-bottom:24px" v-scroll-animate>
       <h3 style="font-size:15px;font-weight:700;margin-bottom:18px">New Session</h3>
       <div style="display:grid;gap:14px">
         <div class="form-group">
@@ -151,18 +151,18 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
     </div>
 
     <!-- Stats bar -->
-    <div class="grid-stats animate-fade-up" style="margin-bottom:24px">
-      <div class="stat-card accent-blue">
+    <div class="grid-stats" style="margin-bottom:24px">
+      <div class="stat-card accent-blue" v-scroll-animate>
         <div class="stat-icon blue">📋</div>
         <div class="stat-value blue">{{ sessions.length }}</div>
         <div class="stat-label">Total Sessions</div>
       </div>
-      <div class="stat-card accent-orange">
+      <div class="stat-card accent-orange" v-scroll-animate="{ delay: 60 }">
         <div class="stat-icon orange">🔥</div>
         <div class="stat-value orange">{{ Math.round(totalCalories).toLocaleString() }}</div>
         <div class="stat-label">Total Calories</div>
       </div>
-      <div class="stat-card accent-neon">
+      <div class="stat-card accent-neon" v-scroll-animate="{ delay: 120 }">
         <div class="stat-icon neon">✅</div>
         <div class="stat-value neon">{{ sessions.filter(s => s.completed).length }}</div>
         <div class="stat-label">Completed</div>
@@ -170,7 +170,7 @@ const totalCalories = computed(() => sessions.value.reduce((s, x) => s + parseFl
     </div>
 
     <!-- Session History -->
-    <div class="card animate-fade-up">
+    <div class="card" v-scroll-animate>
       <h3 style="font-size:15px;font-weight:700;margin-bottom:16px">History</h3>
 
       <div v-if="loading" style="display:flex;flex-direction:column;gap:10px">

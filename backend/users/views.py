@@ -11,6 +11,7 @@ from rest_framework_simplejwt.views import (
 from users.models import PasswordResetToken
 from users.serializers import (
     LoginSerializer,
+    PasswordChangeSerializer,
     PasswordResetConfirmSerializer,
     PasswordResetRequestSerializer,
     ProfileSerializer,
@@ -96,3 +97,15 @@ class PasswordResetConfirmView(generics.GenericAPIView):
         reset_token.is_used = True
         reset_token.save(update_fields=["is_used"])
         return Response({"detail": "Password has been reset."})
+
+
+class PasswordChangeView(generics.GenericAPIView):
+    serializer_class = PasswordChangeSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = request.user
+        user.set_password(serializer.validated_data["new_password"])
+        user.save(update_fields=["password"])
+        return Response({"detail": "Password updated successfully."})

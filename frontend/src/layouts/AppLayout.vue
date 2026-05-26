@@ -16,6 +16,7 @@ const navLinks = [
   { to: '/progress', label: 'Progress', icon: '↗' },
   { to: '/nutrition', label: 'Nutrition', icon: '◎' },
   { to: '/notifications', label: 'Notifications', icon: '◯' },
+  { to: '/profile', label: 'Profile', icon: '☺' },
 ]
 
 const greeting = computed(() => {
@@ -44,19 +45,21 @@ const username = computed(() => auth.user?.username || auth.user?.first_name || 
         <span>SmartGym</span>
       </div>
 
-      <div class="sidebar-section-label">Main</div>
-      <nav style="display:flex;flex-direction:column;gap:2px;margin-bottom:24px">
-        <RouterLink
-          v-for="link in navLinks"
-          :key="link.to"
-          :to="link.to"
-          class="nav-link"
-          @click="ui.closeSidebar()"
-        >
-          <span style="font-size:15px;width:18px;text-align:center;flex-shrink:0">{{ link.icon }}</span>
-          {{ link.label }}
-        </RouterLink>
-      </nav>
+      <div class="sidebar-main">
+        <div class="sidebar-section-label">Main</div>
+        <nav class="sidebar-nav">
+          <RouterLink
+            v-for="link in navLinks"
+            :key="link.to"
+            :to="link.to"
+            class="nav-link"
+            @click="ui.closeSidebar()"
+          >
+            <span style="font-size:15px;width:18px;text-align:center;flex-shrink:0">{{ link.icon }}</span>
+            {{ link.label }}
+          </RouterLink>
+        </nav>
+      </div>
 
       <div class="sidebar-footer">
         <button

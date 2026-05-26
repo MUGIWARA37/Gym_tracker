@@ -91,12 +91,13 @@ const markAllRead = async () => {
     </div>
 
     <!-- List -->
-    <div v-else style="display:flex;flex-direction:column;gap:8px;animate-fade-up">
+    <div v-else style="display:flex;flex-direction:column;gap:8px">
       <div
-        v-for="notif in filtered"
+        v-for="(notif, i) in filtered"
         :key="notif.id"
         class="notif-item"
         :class="{ unread: !notif.is_read }"
+        v-scroll-animate="{ delay: i * 40 }"
         @click="markRead(notif)"
         style="cursor:pointer"
       >

@@ -61,6 +61,21 @@ class ProfileSerializer(UserSerializer):
         return validate_image_upload(value, settings.MAX_UPLOAD_SIZE_MB)
 
 
+class PasswordChangeSerializer(serializers.Serializer):
+    old_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
+
+    def validate_old_password(self, value):
+        user = self.context["request"].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("Current password is incorrect.")
+        return value
+
+    def validate(self, attrs):
+        validate_password(attrs["new_password"], self.context["request"].user)
+        return attrs
+
+
 class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)

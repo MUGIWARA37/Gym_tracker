@@ -64,7 +64,7 @@ onMounted(async () => {
     </div>
 
     <!-- Filters -->
-    <div class="card animate-fade-up" style="margin-bottom:24px">
+    <div class="card" style="margin-bottom:24px" v-scroll-animate>
       <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end">
         <!-- Search -->
         <div class="form-group" style="flex:1;min-width:200px">
@@ -106,7 +106,7 @@ onMounted(async () => {
 
     <!-- Loading -->
     <div v-if="loading" class="grid-cards">
-      <div v-for="i in 6" :key="i" class="exercise-card" style="animate-fade-up">
+      <div v-for="i in 6" :key="i" class="exercise-card" v-scroll-animate="{ delay: i * 40 }">
         <div class="skeleton" style="height:140px"></div>
         <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
           <div class="skeleton" style="height:16px;width:60%"></div>
@@ -125,11 +125,12 @@ onMounted(async () => {
     </div>
 
     <!-- Grid -->
-    <div v-else class="grid-cards animate-fade-up">
+    <div v-else class="grid-cards">
       <div
-        v-for="exercise in filteredExercises"
+        v-for="(exercise, i) in filteredExercises"
         :key="exercise.id"
         class="exercise-card"
+        v-scroll-animate="{ delay: (i % 12) * 50 }"
       >
         <!-- Thumb -->
         <div class="exercise-thumb">

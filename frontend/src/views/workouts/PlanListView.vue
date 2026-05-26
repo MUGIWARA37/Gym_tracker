@@ -79,7 +79,7 @@ onMounted(fetchPlans)
     </div>
 
     <!-- Create form -->
-    <div v-if="showForm" class="card animate-fade-up" style="margin-bottom:24px">
+    <div v-if="showForm" class="card" style="margin-bottom:24px" v-scroll-animate>
       <h3 style="font-size:15px;font-weight:700;margin-bottom:18px">Create New Plan</h3>
       <div style="display:grid;gap:14px">
         <div class="form-group">
@@ -141,12 +141,13 @@ onMounted(fetchPlans)
       No plans yet. <button class="btn btn-primary btn-sm" @click="showForm = true" style="margin-left:8px">Create one →</button>
     </div>
 
-    <div v-else class="grid-cards animate-fade-up">
+    <div v-else class="grid-cards">
       <div
-        v-for="plan in filteredPlans"
+        v-for="(plan, i) in filteredPlans"
         :key="plan.id"
         class="card"
         style="display:flex;flex-direction:column;gap:14px"
+        v-scroll-animate="{ delay: (i % 12) * 50 }"
       >
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
           <h3 style="font-size:15px;font-weight:700;color:var(--text-primary);line-height:1.3">{{ plan.title }}</h3>

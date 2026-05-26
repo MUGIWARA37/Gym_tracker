@@ -95,7 +95,7 @@ const activeMetric = computed(() => metrics.find(m => m.key === selectedMetric.v
     </div>
 
     <!-- Log form -->
-    <div v-if="showForm" class="card animate-fade-up" style="margin-bottom:24px">
+    <div v-if="showForm" class="card" style="margin-bottom:24px" v-scroll-animate>
       <h3 style="font-size:15px;font-weight:700;margin-bottom:18px">New Measurement</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px">
         <div v-for="m in metrics" :key="m.key" class="form-group">
@@ -109,8 +109,8 @@ const activeMetric = computed(() => metrics.find(m => m.key === selectedMetric.v
     </div>
 
     <!-- Latest stats grid -->
-    <div v-if="latestEntry" class="grid-stats animate-fade-up" style="margin-bottom:24px">
-      <div v-for="m in metrics" :key="m.key" class="stat-card" :class="m.key === 'weight_kg' ? 'accent-neon' : ''">
+    <div v-if="latestEntry" class="grid-stats" style="margin-bottom:24px">
+      <div v-for="(m, i) in metrics" :key="m.key" class="stat-card" :class="m.key === 'weight_kg' ? 'accent-neon' : ''" v-scroll-animate="{ delay: i * 60 }">
         <div class="stat-icon" :class="m.key === 'weight_kg' ? 'neon' : ''" style="font-size:18px">{{ m.emoji }}</div>
         <div style="display:flex;align-items:baseline;gap:6px">
           <div style="font-family:var(--font-display);font-size:26px;font-weight:800;letter-spacing:-0.04em" :style="{ color: m.color }">
@@ -130,7 +130,7 @@ const activeMetric = computed(() => metrics.find(m => m.key === selectedMetric.v
     </div>
 
     <!-- Chart -->
-    <div class="card animate-fade-up" style="margin-bottom:24px">
+    <div class="card" style="margin-bottom:24px" v-scroll-animate>
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px">
         <h3 style="font-size:15px;font-weight:700">Trend</h3>
         <div style="display:flex;flex-wrap:wrap;gap:6px">
@@ -172,7 +172,7 @@ const activeMetric = computed(() => metrics.find(m => m.key === selectedMetric.v
     </div>
 
     <!-- Entry history -->
-    <div class="card animate-fade-up">
+    <div class="card" v-scroll-animate>
       <h3 style="font-size:15px;font-weight:700;margin-bottom:16px">All Entries</h3>
       <div v-if="loading" style="display:flex;flex-direction:column;gap:8px">
         <div v-for="i in 3" :key="i" class="skeleton" style="height:56px;border-radius:10px"></div>

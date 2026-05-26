@@ -16,4 +16,7 @@ export const AuthService = {
   profile() {
     return api.get('/auth/profile/')
   },
+  changePassword(payload) {
+    return api.post('/auth/password/change/', payload)
+  },
 }

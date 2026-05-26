@@ -83,7 +83,7 @@ const donutSegments = computed(() => {
     </div>
 
     <!-- Edit Form -->
-    <div v-else-if="editing" class="card animate-fade-up" style="margin-bottom:24px">
+    <div v-else-if="editing" class="card" style="margin-bottom:24px" v-scroll-animate>
       <h3 style="font-size:15px;font-weight:700;margin-bottom:18px">{{ goal ? 'Edit' : 'Set' }} Daily Goals</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
         <div class="form-group">
@@ -123,9 +123,9 @@ const donutSegments = computed(() => {
     <!-- Display goals -->
     <template v-else>
       <!-- Calorie overview -->
-      <div class="grid-2 animate-fade-up" style="gap:20px;margin-bottom:20px;align-items:start">
+      <div class="grid-2" style="gap:20px;margin-bottom:20px;align-items:start">
         <!-- Donut chart -->
-        <div class="card" style="display:flex;align-items:center;gap:24px">
+        <div class="card" style="display:flex;align-items:center;gap:24px" v-scroll-animate>
           <svg width="120" height="120" viewBox="0 0 100 100">
             <circle cx="50" cy="50" r="40" fill="none" stroke="var(--surface-3)" stroke-width="12"/>
             <circle
@@ -153,8 +153,8 @@ const donutSegments = computed(() => {
         </div>
 
         <!-- Macro cards -->
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div v-for="m in macros" :key="m.label" class="card card-sm" style="display:flex;align-items:center;gap:14px">
+        <div style="display:flex;flex-direction:column;gap:12px" v-scroll-animate="{ delay: 120 }">
+          <div v-for="(m, i) in macros" :key="m.label" class="card card-sm" style="display:flex;align-items:center;gap:14px" v-scroll-animate="{ delay: i * 60 }">
             <div style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0" :style="{ background: m.color + '20' }">
               {{ m.label === 'Protein' ? '🥩' : m.label === 'Carbs' ? '🌾' : '🥑' }}
             </div>
@@ -174,7 +174,7 @@ const donutSegments = computed(() => {
       </div>
 
       <!-- Tips -->
-      <div class="card animate-fade-up delay-2">
+      <div class="card" v-scroll-animate="{ delay: 180 }">
         <h3 style="font-size:15px;font-weight:700;margin-bottom:14px">💡 Nutrition Tips</h3>
         <div style="display:grid;gap:10px">
           <div style="padding:12px;border-radius:8px;background:var(--surface-2);font-size:13px;color:var(--text-secondary);border-left:3px solid var(--blue)">

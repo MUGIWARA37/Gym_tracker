@@ -58,23 +58,23 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
 
     <!-- Stats grid -->
     <template v-else>
-      <div class="grid-stats animate-fade-up">
-        <div class="stat-card accent-neon">
+      <div class="grid-stats">
+        <div class="stat-card accent-neon" v-scroll-animate>
           <div class="stat-icon neon">🏋️</div>
           <div class="stat-value neon">{{ stats?.weekly_sessions ?? '—' }}</div>
           <div class="stat-label">Weekly Sessions</div>
         </div>
-        <div class="stat-card accent-orange delay-1">
+        <div class="stat-card accent-orange" v-scroll-animate="{ delay: 60 }">
           <div class="stat-icon orange">🔥</div>
           <div class="stat-value orange">{{ stats?.weekly_calories_burned ? Math.round(stats.weekly_calories_burned).toLocaleString() : '—' }}</div>
           <div class="stat-label">Calories Burned</div>
         </div>
-        <div class="stat-card accent-blue delay-2">
+        <div class="stat-card accent-blue" v-scroll-animate="{ delay: 120 }">
           <div class="stat-icon blue">⚡</div>
           <div class="stat-value blue">{{ stats?.current_streak_days ?? '—' }}</div>
           <div class="stat-label">Day Streak</div>
         </div>
-        <div class="stat-card accent-purple delay-3">
+        <div class="stat-card accent-purple" v-scroll-animate="{ delay: 180 }">
           <div class="stat-icon purple">◎</div>
           <div class="stat-value purple">{{ stats?.goal_completion_percent ?? '—' }}<span style="font-size:18px">%</span></div>
           <div class="stat-label">Goal Completion</div>
@@ -84,7 +84,7 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
       <!-- Goal progress ring + quick actions -->
       <div class="grid-2 mt-8" style="gap:20px;align-items:start">
         <!-- Progress ring card -->
-        <div class="card animate-fade-up delay-2">
+        <div class="card" v-scroll-animate="{ delay: 120 }">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
             <h3 style="font-size:15px;font-weight:700">Weekly Goal</h3>
             <span class="badge badge-neon">{{ stats?.goal_completion_percent ?? 0 }}%</span>
@@ -122,7 +122,7 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
         </div>
 
         <!-- Quick links -->
-        <div class="card animate-fade-up delay-3">
+        <div class="card" v-scroll-animate="{ delay: 180 }">
           <h3 style="font-size:15px;font-weight:700;margin-bottom:16px">Quick Actions</h3>
           <div style="display:flex;flex-direction:column;gap:10px">
             <RouterLink to="/sessions" class="btn btn-primary btn-full" style="justify-content:space-between">
@@ -146,7 +146,7 @@ const moodEmoji = { motivated: '🔥', tired: '😴', excellent: '⚡', average:
       </div>
 
       <!-- Recent Sessions -->
-      <div class="card mt-8 animate-fade-up delay-4">
+      <div class="card mt-8" v-scroll-animate="{ delay: 240 }">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
           <h3 style="font-size:15px;font-weight:700">Recent Sessions</h3>
           <RouterLink to="/sessions" class="btn btn-ghost btn-sm">View all →</RouterLink>
