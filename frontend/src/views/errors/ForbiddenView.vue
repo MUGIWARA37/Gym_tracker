@@ -1,11 +1,8 @@
 <template>
-  <div class="flex min-h-screen items-center justify-center bg-slate-50">
-    <div class="text-center">
-      <h1 class="text-3xl font-semibold">403</h1>
-      <p class="mt-2 text-sm text-slate-500">You do not have access to this page.</p>
-      <RouterLink to="/dashboard" class="mt-4 inline-block text-sm text-slate-700">
-        Back to dashboard
-      </RouterLink>
-    </div>
+  <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);text-align:center;padding:24px">
+    <div style="font-size:80px;margin-bottom:24px">🚫</div>
+    <h1 style="font-family:var(--font-display);font-size:28px;font-weight:800;color:var(--text-primary);margin-bottom:8px">Access Denied</h1>
+    <p style="color:var(--text-secondary);margin-bottom:32px">You don't have permission to view this page.</p>
+    <RouterLink to="/dashboard" class="btn btn-primary btn-lg">← Back to Dashboard</RouterLink>
   </div>
 </template>

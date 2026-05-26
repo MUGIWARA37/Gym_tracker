@@ -10,6 +10,9 @@ export const WorkoutsService = {
   update(id, payload) {
     return api.patch(`/workout-plans/${id}/`, payload)
   },
+  delete(id) {
+    return api.delete(`/workout-plans/${id}/`)
+  },
   remove(id) {
     return api.delete(`/workout-plans/${id}/`)
   },
@@ -26,3 +29,4 @@ export const WorkoutsService = {
     return api.patch(`/workout-plans/${planId}/exercises/reorder/`, payload)
   },
 }
+// alias

@@ -1,7 +1,11 @@
-export function useDebounce(fn, delay = 400) {
+import { ref, watch } from 'vue'
+
+export function useDebounce(source, delay = 400) {
+  const debounced = ref(source.value)
   let timer
-  return (...args) => {
+  watch(source, (val) => {
     clearTimeout(timer)
-    timer = setTimeout(() => fn(...args), delay)
-  }
+    timer = setTimeout(() => { debounced.value = val }, delay)
+  })
+  return debounced
 }

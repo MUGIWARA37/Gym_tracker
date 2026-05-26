@@ -1,33 +1,44 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { ExercisesService } from '../../services/exercises.service'
+import { useDebounce } from '../../composables/useDebounce'
 
 const exercises = ref([])
 const loading = ref(true)
 const error = ref('')
 const selectedMuscle = ref(null)
+const selectedDifficulty = ref(null)
+const searchQuery = ref('')
 
 const muscleGroups = [
-  { key: 'chest', label: 'Chest' },
-  { key: 'back', label: 'Back' },
-  { key: 'legs', label: 'Legs' },
-  { key: 'shoulders', label: 'Shoulders' },
-  { key: 'arms', label: 'Arms' },
-  { key: 'core', label: 'Core' },
-  { key: 'full_body', label: 'Full Body' },
+  { key: 'chest', label: 'Chest', emoji: '💪' },
+  { key: 'back', label: 'Back', emoji: '🔙' },
+  { key: 'legs', label: 'Legs', emoji: '🦵' },
+  { key: 'shoulders', label: 'Shoulders', emoji: '🏋️' },
+  { key: 'arms', label: 'Arms', emoji: '💪' },
+  { key: 'core', label: 'Core', emoji: '⚡' },
+  { key: 'full_body', label: 'Full Body', emoji: '🔥' },
 ]
 
+const difficulties = ['beginner', 'intermediate', 'advanced']
+
+const difficultyColor = { beginner: 'badge-green', intermediate: 'badge-orange', advanced: 'badge-red' }
+const muscleEmoji = { chest: '💪', back: '🏋️', legs: '🦵', shoulders: '🔝', arms: '💪', core: '⚡', full_body: '🔥' }
+
+const debouncedSearch = useDebounce(searchQuery, 400)
+
 const filteredExercises = computed(() => {
-  if (!selectedMuscle.value) return exercises.value
-  return exercises.value.filter(ex => ex.muscle_group === selectedMuscle.value)
+  let list = exercises.value
+  if (selectedMuscle.value) list = list.filter(ex => ex.muscle_group === selectedMuscle.value)
+  if (selectedDifficulty.value) list = list.filter(ex => ex.difficulty_level === selectedDifficulty.value)
+  const q = (debouncedSearch.value || '').toLowerCase().trim()
+  if (q) list = list.filter(ex => ex.name.toLowerCase().includes(q) || ex.description?.toLowerCase().includes(q))
+  return list
 })
 
-const formatLabel = (value) => {
-  if (!value) return ''
-  return value.replace(/_/g, ' ')
-}
+const formatLabel = (v) => v ? v.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : ''
 
-const fetchExercises = async () => {
+onMounted(async () => {
   loading.value = true
   error.value = ''
   try {
@@ -38,110 +49,131 @@ const fetchExercises = async () => {
   } finally {
     loading.value = false
   }
-}
-
-onMounted(fetchExercises)
+})
 </script>
 
 <template>
-  <div>
-    <h1 class="text-2xl font-semibold">Exercises</h1>
-    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Browse and manage exercises.</p>
-
-    <p v-if="loading" class="mt-6 text-sm text-slate-500">Loading exercises...</p>
-    <p v-else-if="error" class="mt-6 text-sm text-red-500">{{ error }}</p>
-    <p v-else-if="!exercises.length" class="mt-6 text-sm text-slate-500">
-      No exercises yet.
-    </p>
-
-    <template v-else>
-      <!-- Muscle Group Filter -->
-      <div class="mt-6 space-y-3">
-        <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Filter by muscle group:</p>
-        <div class="flex flex-wrap gap-2">
-          <button
-            @click="selectedMuscle = null"
-            :class="[
-              'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
-              selectedMuscle === null
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-black'
-                : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700'
-            ]"
-          >
-            All
-          </button>
-          <button
-            v-for="muscle in muscleGroups"
-            :key="muscle.key"
-            @click="selectedMuscle = muscle.key"
-            :class="[
-              'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
-              selectedMuscle === muscle.key
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-black'
-                : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700'
-            ]"
-          >
-            {{ muscle.label }}
-          </button>
+  <div class="page">
+    <div class="page-header">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div>
+          <h1 class="page-title">Exercises</h1>
+          <p class="page-subtitle">{{ exercises.length }} exercises in the library</p>
         </div>
-        <p class="text-xs text-slate-500 dark:text-slate-400">
-          Showing {{ filteredExercises.length }} of {{ exercises.length }} exercises
-        </p>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card animate-fade-up" style="margin-bottom:24px">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end">
+        <!-- Search -->
+        <div class="form-group" style="flex:1;min-width:200px">
+          <label class="form-label">Search</label>
+          <input v-model="searchQuery" type="text" class="form-input" placeholder="Search exercises…" />
+        </div>
+        <!-- Difficulty -->
+        <div class="form-group" style="min-width:150px">
+          <label class="form-label">Difficulty</label>
+          <select v-model="selectedDifficulty" class="form-select">
+            <option :value="null">All levels</option>
+            <option v-for="d in difficulties" :key="d" :value="d">{{ formatLabel(d) }}</option>
+          </select>
+        </div>
       </div>
 
-      <!-- Exercise Grid -->
-      <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <div
-          v-for="exercise in filteredExercises"
-          :key="exercise.id"
-          class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
+      <!-- Muscle group chips -->
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+        <button
+          class="chip"
+          :class="{ active: selectedMuscle === null }"
+          @click="selectedMuscle = null"
+        >All muscles</button>
+        <button
+          v-for="m in muscleGroups"
+          :key="m.key"
+          class="chip"
+          :class="{ active: selectedMuscle === m.key }"
+          @click="selectedMuscle = m.key"
         >
-          <div class="h-36 bg-slate-100 dark:bg-slate-800">
-            <img
-              v-if="exercise.image"
-              :src="exercise.image"
-              :alt="exercise.name"
-              class="h-full w-full object-cover"
-            />
+          {{ m.emoji }} {{ m.label }}
+        </button>
+      </div>
+
+      <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">
+        Showing <strong style="color:var(--text-primary)">{{ filteredExercises.length }}</strong> of {{ exercises.length }} exercises
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div v-if="loading" class="grid-cards">
+      <div v-for="i in 6" :key="i" class="exercise-card" style="animate-fade-up">
+        <div class="skeleton" style="height:140px"></div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+          <div class="skeleton" style="height:16px;width:60%"></div>
+          <div class="skeleton" style="height:12px"></div>
+          <div class="skeleton" style="height:12px;width:70%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div v-else-if="error" style="text-align:center;padding:48px;color:#f87171">{{ error }}</div>
+
+    <!-- Empty -->
+    <div v-else-if="!filteredExercises.length" style="text-align:center;padding:48px;color:var(--text-muted)">
+      No exercises found. Try adjusting your filters.
+    </div>
+
+    <!-- Grid -->
+    <div v-else class="grid-cards animate-fade-up">
+      <div
+        v-for="exercise in filteredExercises"
+        :key="exercise.id"
+        class="exercise-card"
+      >
+        <!-- Thumb -->
+        <div class="exercise-thumb">
+          <img v-if="exercise.image" :src="exercise.image" :alt="exercise.name" />
+          <div v-else class="muscle-bg">
+            <span style="font-size:48px">{{ muscleEmoji[exercise.muscle_group] || '💪' }}</span>
           </div>
-          <div class="space-y-2 p-4">
-            <div class="flex items-center justify-between gap-2">
-              <h2 class="text-base font-semibold text-slate-900 dark:text-white">
-                {{ exercise.name }}
-              </h2>
-              <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-200">
-                {{ formatLabel(exercise.difficulty_level) }}
-              </span>
-            </div>
-            <p class="text-sm text-slate-500 dark:text-slate-300">
+          <!-- Difficulty badge overlay -->
+          <span
+            class="badge"
+            :class="difficultyColor[exercise.difficulty_level]"
+            style="position:absolute;top:10px;right:10px;backdrop-filter:blur(8px)"
+          >{{ formatLabel(exercise.difficulty_level) }}</span>
+        </div>
+
+        <!-- Body -->
+        <div style="padding:16px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <div>
+            <h2 style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px">{{ exercise.name }}</h2>
+            <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">
               {{ exercise.description || 'No description provided.' }}
             </p>
-            <div class="flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-300">
-              <span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800">
-                {{ formatLabel(exercise.muscle_group) }}
-              </span>
-              <span
-                v-if="exercise.equipment_needed"
-                class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
-              >
-                {{ exercise.equipment_needed }}
-              </span>
-              <span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800">
-                {{ exercise.calories_burn_estimate }} kcal / 30m
-              </span>
-            </div>
+          </div>
+
+          <!-- Tags -->
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="badge badge-muted">{{ formatLabel(exercise.muscle_group) }}</span>
+            <span v-if="exercise.equipment_needed" class="badge badge-muted">{{ exercise.equipment_needed }}</span>
+          </div>
+
+          <!-- Calories & video -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--border)">
+            <span style="font-size:12px;color:var(--text-muted)">🔥 {{ exercise.calories_burn_estimate }} kcal / 30m</span>
             <a
               v-if="exercise.video_url"
               :href="exercise.video_url"
               target="_blank"
               rel="noopener"
-              class="text-xs font-medium text-slate-700 underline dark:text-slate-200"
-            >
-              Watch demo
-            </a>
+              class="btn btn-ghost btn-sm"
+              style="font-size:11px;padding:4px 10px"
+            >▶ Watch</a>
           </div>
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>

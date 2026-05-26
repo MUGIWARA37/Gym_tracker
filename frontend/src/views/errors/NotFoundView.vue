@@ -1,11 +1,8 @@
 <template>
-  <div class="flex min-h-screen items-center justify-center bg-slate-50">
-    <div class="text-center">
-      <h1 class="text-3xl font-semibold">404</h1>
-      <p class="mt-2 text-sm text-slate-500">Page not found.</p>
-      <RouterLink to="/dashboard" class="mt-4 inline-block text-sm text-slate-700">
-        Back to dashboard
-      </RouterLink>
-    </div>
+  <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);text-align:center;padding:24px">
+    <div style="font-family:var(--font-display);font-size:120px;font-weight:800;letter-spacing:-0.06em;line-height:1;color:var(--surface-3);margin-bottom:24px">404</div>
+    <h1 style="font-family:var(--font-display);font-size:28px;font-weight:800;color:var(--text-primary);margin-bottom:8px">Page not found</h1>
+    <p style="color:var(--text-secondary);margin-bottom:32px">The page you're looking for doesn't exist.</p>
+    <RouterLink to="/dashboard" class="btn btn-primary btn-lg">← Back to Dashboard</RouterLink>
   </div>
 </template>

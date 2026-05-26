@@ -3,37 +3,44 @@ import { ref } from 'vue'
 import api from '../../services/api'
 
 const email = ref('')
-const statusMessage = ref('')
+const sent = ref(false)
+const loading = ref(false)
+const error = ref('')
 
 const submit = async () => {
-  statusMessage.value = ''
-  await api.post('/auth/password/reset/', { email: email.value })
-  statusMessage.value = 'Reset link sent. Check your email.'
+  loading.value = true
+  error.value = ''
+  try {
+    await api.post('/auth/password-reset/', { email: email.value })
+    sent.value = true
+  } catch {
+    error.value = 'Failed to send reset email. Please check the address.'
+  } finally { loading.value = false }
 }
 </script>
 
 <template>
-  <div>
-    <h1 class="text-2xl font-semibold text-slate-900">Reset password</h1>
-    <p class="mt-2 text-sm text-slate-500">We will email you a reset link.</p>
+  <div class="animate-fade-up">
+    <div class="auth-title">Reset Password</div>
+    <div class="auth-sub">We'll send a reset link to your email</div>
 
-    <form class="mt-6 space-y-4" @submit.prevent="submit">
-      <div>
-        <label class="text-sm text-slate-600">Email</label>
-        <input
-          v-model="email"
-          type="email"
-          class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2"
-          required
-        />
+    <div v-if="sent" style="background:rgba(200,247,82,0.1);border:1px solid rgba(200,247,82,0.2);border-radius:10px;padding:16px;font-size:14px;color:var(--neon);margin-bottom:20px">
+      ✓ Reset link sent! Check your inbox.
+    </div>
+
+    <form v-else @submit.prevent="submit" style="display:flex;flex-direction:column;gap:16px">
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input v-model="email" type="email" class="form-input" placeholder="you@example.com" required />
       </div>
-      <p v-if="statusMessage" class="text-sm text-green-600">{{ statusMessage }}</p>
-      <button
-        type="submit"
-        class="w-full rounded-lg bg-slate-900 px-4 py-2 text-white"
-      >
-        Send reset link
+      <div v-if="error" style="font-size:13px;color:#f87171">{{ error }}</div>
+      <button type="submit" class="btn btn-primary btn-lg btn-full" :disabled="loading">
+        {{ loading ? 'Sending…' : 'Send Reset Link' }}
       </button>
     </form>
+
+    <div style="margin-top:20px;text-align:center;font-size:13px">
+      <RouterLink to="/login" style="color:var(--neon);text-decoration:none;font-weight:600">← Back to sign in</RouterLink>
+    </div>
   </div>
 </template>
