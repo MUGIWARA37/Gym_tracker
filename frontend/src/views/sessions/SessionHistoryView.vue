@@ -1,9 +1,12 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { SessionsService } from '../../services/sessions.service'
 import { WorkoutsService } from '../../services/workouts.service'
 import { useTimer } from '../../composables/useTimer'
 import Icon from '../../components/ui/Icon.vue'
+
+const router = useRouter()
 
 const sessions = ref([])
 const plans = ref([])
@@ -60,6 +63,8 @@ const startSession = async () => {
     showForm.value = false
     timerState.value = 'active'
     start()
+    // Navigate to the dedicated active session view
+    router.push('/sessions/' + data.id)
   } catch { alert('Failed to start session.') }
   finally { submitting.value = false }
 }

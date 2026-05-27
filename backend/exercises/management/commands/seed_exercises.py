@@ -333,7 +333,16 @@ class Command(BaseCommand):
 
         created_count = 0
         for data in exercises_data:
-            exercise, created = Exercise.objects.get_or_create(
+            # Deduplicate: if multiple rows share the same name, keep the first
+            duplicates = Exercise.objects.filter(name=data["name"])
+            if duplicates.count() > 1:
+                keep = duplicates.first()
+                duplicates.exclude(pk=keep.pk).delete()
+                self.stdout.write(self.style.WARNING(
+                    f'⚠ Removed duplicate entries for "{data["name"]}"'
+                ))
+
+            exercise, created = Exercise.objects.update_or_create(
                 name=data["name"],
                 defaults={
                     "description": data["description"],

@@ -421,6 +421,62 @@ const px = (v) => (typeof v === 'number' ? `${v}px` : v)
   </svg>
 
   <svg
+    v-else-if="name === 'flag'"
+    :width="px(size)" :height="px(size)"
+    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <title v-if="title">{{ title }}</title>
+    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+    <line x1="4" y1="22" x2="4" y2="15" />
+  </svg>
+
+  <svg
+    v-else-if="name === 'forward'"
+    :width="px(size)" :height="px(size)"
+    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <title v-if="title">{{ title }}</title>
+    <path d="m13 17 5-5-5-5" />
+    <path d="m6 17 5-5-5-5" />
+  </svg>
+
+  <svg
+    v-else-if="name === 'ellipsis-horizontal-circle'"
+    :width="px(size)" :height="px(size)"
+    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <title v-if="title">{{ title }}</title>
+    <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
+    <path d="M8 12h.01M12 12h.01M16 12h.01" />
+  </svg>
+
+  <svg
+    v-else-if="name === 'camera'"
+    :width="px(size)" :height="px(size)"
+    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <title v-if="title">{{ title }}</title>
+    <path d="M9 3H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3" />
+    <path d="M9 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H9V3Z" />
+    <path d="M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+  </svg>
+
+  <svg
+    v-else-if="name === 'heart'"
+    :width="px(size)" :height="px(size)"
+    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <title v-if="title">{{ title }}</title>
+    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7 11 4.6a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1a5.5 5.5 0 0 0 0-7.8z" />
+  </svg>
+
+
+  <svg
     v-else
     :width="px(size)" :height="px(size)"
     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"

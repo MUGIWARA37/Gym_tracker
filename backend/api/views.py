@@ -25,27 +25,21 @@ class DashboardStatsView(APIView):
         weekly_calories_burned = round(sum(weekly_calories) or 0, 2)
         current_streak_days = _calculate_streak_days(sessions)
         goal_completion_percent = _calculate_goal_completion(sessions, week_start)
-        recent_sessions = (
-            sessions.order_by("-start_time")[:5]
-            .values(
-                "id",
-                "workout_plan_id",
-                "start_time",
-                "end_time",
-                "calories_burned",
-                "completed",
-            )
-        )
+        from sessions.serializers import WorkoutSessionSerializer
+        recent_qs = sessions.order_by("-start_time").select_related("workout_plan")[:5]
+        recent_sessions = WorkoutSessionSerializer(recent_qs, many=True).data
         muscle_group_distribution = _muscle_group_distribution(request.user, week_start)
 
+        from exercises.models import Exercise
         return Response(
             {
                 "weekly_sessions": weekly_sessions,
                 "weekly_calories_burned": weekly_calories_burned,
                 "current_streak_days": current_streak_days,
                 "goal_completion_percent": goal_completion_percent,
-                "recent_sessions": list(recent_sessions),
+                "recent_sessions": recent_sessions,
                 "muscle_group_distribution": muscle_group_distribution,
+                "total_exercises": Exercise.objects.count(),
             }
         )
 
@@ -68,13 +62,9 @@ def _calculate_streak_days(sessions_queryset):
     streak = 0
     cursor = timezone.now().date()
     for date_value in unique_dates:
-        if date_value == cursor:
+        if date_value == cursor or date_value == cursor - timedelta(days=1):
             streak += 1
-            cursor = cursor - timedelta(days=1)
-            continue
-        if date_value == cursor - timedelta(days=1):
-            streak += 1
-            cursor = cursor - timedelta(days=2)
+            cursor = date_value - timedelta(days=1)
             continue
         break
     return streak

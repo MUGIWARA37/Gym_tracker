@@ -66,7 +66,7 @@ EXERCISES: list[ExerciseTemplate] = [
 
 
 def _upsert_exercise(t: ExerciseTemplate, *, created_by) -> Exercise:
-    ex, _created = Exercise.objects.get_or_create(
+    ex, _created = Exercise.objects.update_or_create(
         name=t.name,
         defaults={
             "description": "",

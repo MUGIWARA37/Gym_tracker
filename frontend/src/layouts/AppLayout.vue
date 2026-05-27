@@ -10,13 +10,14 @@ const auth = useAuthStore()
 const route = useRoute()
 
 const navLinks = [
-  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
-  { to: '/exercises', label: 'Exercises', icon: 'plus-circle' },
-  { to: '/workouts', label: 'Workout Plans', icon: 'rectangle-stack' },
-  { to: '/sessions', label: 'Sessions', icon: 'play-circle' },
-  { to: '/nutrition', label: 'Nutrition', icon: 'beaker' },
-  { to: '/notifications', label: 'Notifications', icon: 'bell' },
-  { to: '/profile', label: 'Profile', icon: 'user-circle' },
+  { to: '/dashboard',     label: 'Dashboard',      icon: 'dashboard' },
+  { to: '/exercises',     label: 'Exercises',       icon: 'plus-circle' },
+  { to: '/workouts',      label: 'Workout Plans',   icon: 'rectangle-stack' },
+  { to: '/sessions',      label: 'Sessions',        icon: 'play-circle' },
+  { to: '/progress',      label: 'Progress',        icon: 'chart-bar-square' },
+  { to: '/nutrition',     label: 'Nutrition',       icon: 'beaker' },
+  { to: '/notifications', label: 'Notifications',   icon: 'bell' },
+  { to: '/profile',       label: 'Profile',         icon: 'user-circle' },
 ]
 
 const greeting = computed(() => {

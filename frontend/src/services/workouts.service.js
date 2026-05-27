@@ -30,3 +30,8 @@ export const WorkoutsService = {
   },
 }
 // alias
+
+// Add get() at module level since the object literal is already closed
+Object.assign(WorkoutsService, {
+  get(id) { return api.get(`/workout-plans/${id}/`) },
+})

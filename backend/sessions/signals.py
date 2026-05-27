@@ -26,5 +26,5 @@ def session_completed(sender, instance, created, **kwargs):
             user=instance.user,
             type="achievement",
             title="Workout complete! 🎯",
-            message="Great job finishing your workout session!",
+            message=f"Great job finishing your workout session! You burned {instance.calories_burned} kcal.",
         )
