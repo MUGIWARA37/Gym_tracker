@@ -16,6 +16,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 180,
                 "met_value": 6.0,
+                "video_url": "https://www.youtube.com/watch?v=vcBig73ojpE",
             },
             {
                 "name": "Dumbbell Chest Press",
@@ -25,6 +26,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 160,
                 "met_value": 5.5,
+                "video_url": "https://www.youtube.com/watch?v=QsYre__-aro",
             },
             {
                 "name": "Push-ups",
@@ -34,6 +36,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 140,
                 "met_value": 4.5,
+                "video_url": "https://www.youtube.com/watch?v=IODxDxX7oi4",
             },
             {
                 "name": "Incline Bench Press",
@@ -43,6 +46,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 170,
                 "met_value": 5.8,
+                "video_url": "https://www.youtube.com/watch?v=DbFgADa2PL8",
             },
             {
                 "name": "Cable Chest Fly",
@@ -52,6 +56,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 120,
                 "met_value": 3.8,
+                "video_url": "https://www.youtube.com/watch?v=Iwe6AmxVf7o",
             },
             # BACK
             {
@@ -62,6 +67,7 @@ class Command(BaseCommand):
                 "difficulty_level": "advanced",
                 "calories_burn_estimate": 220,
                 "met_value": 7.5,
+                "video_url": "https://www.youtube.com/watch?v=op9kVnSso6Q",
             },
             {
                 "name": "Lat Pulldowns",
@@ -71,6 +77,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 140,
                 "met_value": 4.5,
+                "video_url": "https://www.youtube.com/watch?v=CAwf7n6Luuc",
             },
             {
                 "name": "Bent Over Barbell Rows",
@@ -80,6 +87,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 200,
                 "met_value": 6.8,
+                "video_url": "https://www.youtube.com/watch?v=FWJR5Ve8bnQ",
             },
             {
                 "name": "Pull-ups",
@@ -89,6 +97,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 160,
                 "met_value": 5.5,
+                "video_url": "https://www.youtube.com/watch?v=eGo4IYlbE5g",
             },
             {
                 "name": "Dumbbell Rows",
@@ -98,6 +107,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 150,
                 "met_value": 5.0,
+                "video_url": "https://www.youtube.com/watch?v=roCP2_S2bXE",
             },
             # LEGS
             {
@@ -108,6 +118,7 @@ class Command(BaseCommand):
                 "difficulty_level": "advanced",
                 "calories_burn_estimate": 240,
                 "met_value": 8.0,
+                "video_url": "https://www.youtube.com/watch?v=bEv6CCg2BC8",
             },
             {
                 "name": "Leg Press",
@@ -117,6 +128,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 180,
                 "met_value": 6.0,
+                "video_url": "https://www.youtube.com/watch?v=IZxyjW7MPJQ",
             },
             {
                 "name": "Dumbbell Lunges",
@@ -126,6 +138,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 160,
                 "met_value": 5.5,
+                "video_url": "https://www.youtube.com/watch?v=D7KaRcUTQeE",
             },
             {
                 "name": "Leg Curl",
@@ -135,6 +148,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 120,
                 "met_value": 3.8,
+                "video_url": "https://www.youtube.com/watch?v=ELOCsoDSmrg",
             },
             {
                 "name": "Bulgarian Split Squats",
@@ -144,6 +158,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 140,
                 "met_value": 4.5,
+                "video_url": "https://www.youtube.com/watch?v=2C-uNgKwPLE",
             },
             # SHOULDERS
             {
@@ -154,6 +169,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 160,
                 "met_value": 5.5,
+                "video_url": "https://www.youtube.com/watch?v=2yjwXTZbrDM",
             },
             {
                 "name": "Dumbbell Shoulder Press",
@@ -163,6 +179,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 150,
                 "met_value": 5.0,
+                "video_url": "https://www.youtube.com/watch?v=qEwKCR5JCog",
             },
             {
                 "name": "Lateral Raises",
@@ -172,6 +189,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 100,
                 "met_value": 3.0,
+                "video_url": "https://www.youtube.com/watch?v=3VcKaXpzqRo",
             },
             {
                 "name": "Machine Shoulder Press",
@@ -181,6 +199,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 140,
                 "met_value": 4.5,
+                "video_url": "https://www.youtube.com/watch?v=WvLMauqrnK8",
             },
             {
                 "name": "Face Pulls",
@@ -190,6 +209,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 110,
                 "met_value": 3.2,
+                "video_url": "https://www.youtube.com/watch?v=HSoHeSjovqc",
             },
             # ARMS
             {
@@ -200,6 +220,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 120,
                 "met_value": 3.8,
+                "video_url": "https://www.youtube.com/watch?v=kwG2ipFRgfo",
             },
             {
                 "name": "Dumbbell Curls",
@@ -209,6 +230,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 110,
                 "met_value": 3.5,
+                "video_url": "https://www.youtube.com/watch?v=ykJmrZ5v0Oo",
             },
             {
                 "name": "Tricep Dips",
@@ -218,6 +240,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 150,
                 "met_value": 5.0,
+                "video_url": "https://www.youtube.com/watch?v=0326dy_-CzM",
             },
             {
                 "name": "Skull Crushers",
@@ -227,6 +250,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 130,
                 "met_value": 4.2,
+                "video_url": "https://www.youtube.com/watch?v=d_KZxkY_0cM",
             },
             {
                 "name": "Cable Tricep Pushdown",
@@ -236,6 +260,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 100,
                 "met_value": 3.0,
+                "video_url": "https://www.youtube.com/watch?v=vB5OHsJ3EME",
             },
             # CORE
             {
@@ -246,6 +271,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 80,
                 "met_value": 2.5,
+                "video_url": "https://www.youtube.com/watch?v=ASdvN_XEl_c",
             },
             {
                 "name": "Crunches",
@@ -255,6 +281,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 90,
                 "met_value": 2.8,
+                "video_url": "https://www.youtube.com/watch?v=Xyd_fa5zoEU",
             },
             {
                 "name": "Cable Woodchops",
@@ -264,6 +291,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 110,
                 "met_value": 3.5,
+                "video_url": "https://www.youtube.com/watch?v=YUCLb5AHpH8",
             },
             {
                 "name": "Leg Raises",
@@ -273,6 +301,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 120,
                 "met_value": 3.8,
+                "video_url": "https://www.youtube.com/watch?v=l4kQd9eWclE",
             },
             {
                 "name": "Russian Twists",
@@ -282,6 +311,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 100,
                 "met_value": 3.0,
+                "video_url": "https://www.youtube.com/watch?v=wkD8rjkodUI",
             },
             # FULL BODY
             {
@@ -292,6 +322,7 @@ class Command(BaseCommand):
                 "difficulty_level": "advanced",
                 "calories_burn_estimate": 200,
                 "met_value": 7.0,
+                "video_url": "https://www.youtube.com/watch?v=dZgVxmf6jkA",
             },
             {
                 "name": "Mountain Climbers",
@@ -301,6 +332,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 160,
                 "met_value": 5.5,
+                "video_url": "https://www.youtube.com/watch?v=nmwgirgXLYM",
             },
             {
                 "name": "Kettlebell Swings",
@@ -310,6 +342,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 180,
                 "met_value": 6.0,
+                "video_url": "https://www.youtube.com/watch?v=sSESeQAir2c",
             },
             {
                 "name": "Rowing Machine",
@@ -319,6 +352,7 @@ class Command(BaseCommand):
                 "difficulty_level": "intermediate",
                 "calories_burn_estimate": 170,
                 "met_value": 5.8,
+                "video_url": "https://www.youtube.com/watch?v=H0r7NIjTqFw",
             },
             {
                 "name": "Jump Rope",
@@ -328,6 +362,7 @@ class Command(BaseCommand):
                 "difficulty_level": "beginner",
                 "calories_burn_estimate": 150,
                 "met_value": 5.0,
+                "video_url": "https://www.youtube.com/watch?v=u3zgHI8QnqE",
             },
         ]
 
@@ -351,6 +386,7 @@ class Command(BaseCommand):
                     "difficulty_level": data["difficulty_level"],
                     "calories_burn_estimate": data["calories_burn_estimate"],
                     "met_value": data["met_value"],
+                    "video_url": data.get("video_url", ""),
                 },
             )
             if created:
