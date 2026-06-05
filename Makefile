@@ -7,6 +7,14 @@ SEED_EMAIL ?= demo@example.com
 SEED_PASSWORD ?= DemoPass123!
 
 run: ensure-env build-frontend-dist
+	docker stop $(docker ps -q)
+	@echo "==============================================="
+	@echo "🚀 PRESENTATION READY"
+	@echo "Use these credentials to login:"
+	@echo "Username: $(SEED_USERNAME)"
+	@echo "Email:    $(SEED_EMAIL)"
+	@echo "Password: $(SEED_PASSWORD)"
+	@echo "==============================================="
 	docker compose build backend
 	docker compose up -d db backend
 	docker compose exec -T backend python manage.py migrate
